@@ -1,0 +1,7 @@
+Example 1:
+User query: "Create post on my facebook page 'Test page' saying 'Hello world!'"
+Plan step 1: Create a post on page "Test page"
+API calling 1: POST /v20.0/{{id}}/feed with parameters message="Hello world!", access_token="ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+API response: Your post was successfully created. Its id is '331866956681863_122095102760377691'
+Thought: I have finished the execution plan and created a post on the page "Test page".
+Final Answer: I have created a post on the page "Test page".

@@ -21,10 +21,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `credentials`
 --
 
+
+-- PERSONAL NOTE: We changed `utf8mb4_0900_ai_ci` into `utf8mb4_general_ci`
+
+
 CREATE TABLE `credentials` (
   `user_id` int DEFAULT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Table structure for table `jira_credentials`
@@ -37,7 +41,7 @@ CREATE TABLE `jira_credentials` (
   `protocol` varchar(255) NOT NULL,
   `host` varchar(255) NOT NULL,
   `basepath` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 --
@@ -48,4 +52,17 @@ CREATE TABLE `trello_credentials` (
   `user_id` int NOT NULL,
   `api_key` varchar(255) DEFAULT NULL,
   `api_token` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+--
+-- Table structure for table `facebook_credentials`
+--
+
+CREATE TABLE `facebook_credentials` (
+  `user_id` int NOT NULL,
+  `access_token` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+

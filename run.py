@@ -26,9 +26,10 @@ def main():
     # database connection details
     db_config = {
         'host': 'localhost',
-        'database': 'llamadb',
+        'port': 3333,
+        'database': 'synapse-copilot',
         'user': 'root',
-        'password': '123456',
+        # 'password': '123456',
     }
 
     # Connect to the MySQL server
@@ -193,7 +194,7 @@ def main():
                 print("Key is not present in the database")
                 return ""
         replace_api_credentials_in_json(
-            ###to replace all the key and token variables in the specs file with real values
+            # ## to replace all the key and token variables in the specs file with real values
             scenario=scenario,
             actual_key=key,
             actual_token=token
