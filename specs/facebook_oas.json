@@ -61,7 +61,9 @@
           "200": {
             "description": "Successful response",
             "content": {
-              "application/json": {}
+              "application/json": {
+                "example": {"id": "331866956681863_y122095102760377691"}
+              }
             }
           }
         }
@@ -91,7 +93,7 @@
           "200": {
             "description": "Successful response",
             "content": {
-              "application/json": {}
+              "application/json": {"id": "122095160744377691", "post_id": "331866956681863_122095160834377691"}
             }
           }
         }

@@ -1,7 +1,10 @@
 # openai_api_key: "YOUR OPENAI KEY"
-openai_api_key: "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"
+OPENAI_MODEL: "gpt-3.5-turbo"
 
-openai_key: "YOUR OPENAI API KEY"
+
+openai_api_key: "sk-proj-BcRr3cZWfi7PNWx906FxT3BlbkFJ2JpmMjEiC9XFGQEa1uXC"
+
+openai_key: "sk-proj-BcRr3cZWfi7PNWx906FxT3BlbkFJ2JpmMjEiC9XFGQEa1uXC"
 tmdb_access_token: "YOUR TMDB ACCESS TOKEN"
 spotipy_client_id: "YOUR SPOTIFY APPLICATION CLIENT ID"
 spotipy_client_secret: "YOUR SPOTIFY APPLCIATION CLIENT SECRET"

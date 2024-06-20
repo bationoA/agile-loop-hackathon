@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from typing import Any, Dict, List, Optional, Tuple
 from copy import deepcopy
 import yaml
@@ -225,7 +226,11 @@ class Caller(Chain):
         elif action == "POST":
             params = data.get("params")
             request_body = data.get("data")
+            request_body['access_token'] = os.environ["FACEBOOK_ACCESS_TOKEN"]  # TODO: To make sure the correct token is used. This is to avoid error dur to LLM failing to set the token
+            print("------------------- POST --------------------------")
+            print(f"data: {data}")
             response = self.requests_wrapper.post(data["url"], params=params, data=request_body)
+            print(f"response: {response}")
         elif action == "PUT":
             params = data.get("params")
             request_body = data.get("data")
@@ -280,7 +285,7 @@ class Caller(Chain):
         if not self.with_response and 'responses' in tmp_docs:
             tmp_docs.pop("responses")
         tmp_docs = yaml.dump(tmp_docs)
-        encoder = tiktoken.encoding_for_model('gpt-4')
+        encoder = tiktoken.encoding_for_model(os.environ["OPENAI_MODEL"])
         encoded_docs = encoder.encode(tmp_docs)
         if len(encoded_docs) > 1500:
             tmp_docs = encoder.decode(encoded_docs[:1500])

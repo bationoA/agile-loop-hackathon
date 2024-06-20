@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from typing import Any, Dict, List, Optional
 import sys
 from io import StringIO
@@ -219,7 +220,7 @@ class ResponseParser(Chain):
             response_schema = json.dumps(
                 api_doc['responses']['content']['application/json; charset=utf-8']["schema"]['properties'], indent=4)
                 # text-davinci-003
-        encoder = tiktoken.encoding_for_model('gpt-4')
+        encoder = tiktoken.encoding_for_model(os.environ["OPENAI_MODEL"])
         encoded_schema = encoder.encode(response_schema)
         max_schema_length = 2500
         if len(encoded_schema) > max_schema_length:
@@ -407,7 +408,7 @@ class SimpleResponseParser(Chain):
                                  "api_param", "response_description"]
             )
             # text-davinci-003
-            encoder = tiktoken.encoding_for_model('gpt-4')
+            encoder = tiktoken.encoding_for_model(os.environ["OPENAI_MODEL"])
             super().__init__(llm=llm, llm_parsing_prompt=llm_parsing_prompt, encoder=encoder)
             return
 
@@ -421,7 +422,7 @@ class SimpleResponseParser(Chain):
                              "api_param", "response_description"]
         )
         # text-davinci-003
-        encoder = tiktoken.encoding_for_model('gpt-4')
+        encoder = tiktoken.encoding_for_model(os.environ["OPENAI_MODEL"])
 
         super().__init__(llm=llm, llm_parsing_prompt=llm_parsing_prompt, encoder=encoder)
 

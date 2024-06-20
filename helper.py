@@ -44,6 +44,14 @@ def process_spec_file(file_path: str = None, token: str = None, key: str = None,
         }
         return api_spec, headers
 
+    # TODO -------------- WE STARTED HERE ----------------------------------
+    if "facebook" in file_path:
+        params = {
+            "access_token": token
+        }
+        return api_spec, params
+    # TODO -------------- WE FINISHED HERE ----------------------------------
+
     if "spotify" in file_path:
         scopes = list(raw_api_spec['components']['securitySchemes']
                       ['oauth_2_0']['flows']['authorizationCode']['scopes'].keys())
@@ -78,13 +86,27 @@ def populate_planner_icl_examples(scenario: str = None):
     """
 
 
-def replace_api_credentials(model, scenario, actual_key, actual_token):
+def replace_api_credentials(model, scenario, actual_key=None, actual_token=None):
+
+    # TODO: ---------- We added from here
+    # We have also set actual_key=None, actual_token=None in the function parameters
+    if actual_key is None and actual_token is None:
+        return
+
+    # TODO: ---------- our adds end here
+
     # Open the file and read the contents
     with open(f"icl_examples/{model}/{scenario}_base.txt", 'r') as file:
         content = file.readlines()
 
     # Replace placeholders with actual key and token
-    updated_content = [line.replace(r"{key}", actual_key).replace(r"{token}", actual_token) for line in content]
+    if actual_key is not None:
+        updated_content = [line.replace(r"{key}", actual_key) for line in content]
+
+    if actual_token is not None:
+        updated_content = [line.replace(r"{token}", actual_token) for line in content]
+
+    print(f"--->>> {scenario} ---- updated_content: {updated_content}")
 
     # Write the updated content back to the file
     with open(f"icl_examples/{model}/{scenario}.txt", 'w') as file:

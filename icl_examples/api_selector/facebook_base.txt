@@ -1,0 +1,5 @@
+Example 1:
+Background: The Facebook page called "Test page" has an id of "331866956681863"
+User query: "Create post on my facebook page 'Test page' saying 'Hello world!'"
+API calling 1: POST /v20.0/331866956681863/feed with parameters message="Hello world!", access_token="{token}"
+API response: Your post was successfully created. Its id is "331866956681863_122095102760377691"
