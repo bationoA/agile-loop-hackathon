@@ -62,7 +62,14 @@
           "200": {
             "description": "Successful response",
             "content": {
-              "application/json": {}
+              "application/json": {
+                "schema": {"type": "object"},
+                "examples": {
+                  "response": {
+                    "value": {"id": "{{id}}"}
+                  }
+                }
+              }
             }
           }
         }

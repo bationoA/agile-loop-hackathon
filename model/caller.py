@@ -230,6 +230,7 @@ class Caller(Chain):
             print("------------------- POST --------------------------")
             print(f"data: {data}")
             response = self.requests_wrapper.post(data["url"], params=params, data=request_body)
+            print(f"response type: {type(response)}")
             print(f"response: {response}")
         elif action == "PUT":
             params = data.get("params")
@@ -346,6 +347,7 @@ class Caller(Chain):
                     llm=self.llm,
                     api_path=api_path,
                     api_doc=api_doc_for_parser,
+                    with_example=True  # TODO: We added this so that it considered example
                 )
             # else:
             #     response_parser = SimpleResponseParser(

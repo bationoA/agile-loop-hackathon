@@ -1,7 +1,8 @@
 Example 1:
+Background: The access_token is "{token}".
 User query: "Create post on my facebook page 'Test page' saying 'Hello world!'"
 Plan step 1: Create a post on page "Test page"
 API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Hello world!", access_token={token}}
-API response: Your post was successfully created. Its id is "331866956681863_122095102760377691"
+API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
 Thought: I have finished the execution plan and created a post on the page "Test page".
 Final Answer: I have created a post on the page "Test page".
