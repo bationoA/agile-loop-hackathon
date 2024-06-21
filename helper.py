@@ -113,17 +113,30 @@ def replace_api_credentials(model, scenario, actual_key=None, actual_token=None)
         file.writelines(updated_content)
 
 
-def replace_api_credentials_in_json(scenario, actual_key, actual_token):
+def replace_api_credentials_in_json(scenario, actual_key=None, actual_token=None):
+    # TODO: We modified this. Now actual_key or actual_token can be None, but not both
+    if actual_key is None and actual_token is None:
+        raise "Both actual_key and actual_token cannot be None."
+
     # Open the JSON file and load the content
     with open(f"./specs/{scenario}_base.json", 'r') as json_file:
         content = json.load(json_file)
 
-    def replace_values(d, actual_key, actual_token):
+    def replace_values(d, actual_key=None, actual_token=None):
+        # TODO: We modified this. Now actual_key or actual_token can be None, but not both
+        if actual_key is None and actual_token is None:
+            raise "Both actual_key and actual_token cannot be None."
+
         for key, value in d.items():
             if isinstance(value, dict):
                 replace_values(value, actual_key, actual_token)
             elif isinstance(value, str):
-                d[key] = value.replace(r"{key}", actual_key).replace(r"{token}", actual_token)
+                # TODO: We edited this. Values are replaced if they are not None
+                # OLD: facebook_oas.jsond[key] = value.replace(r"{key}", actual_key).replace(r"{token}", actual_token)
+                if actual_key is not None:
+                    d[key] = value.replace(r"{key}", actual_key)
+                if actual_token is not None:
+                    d[key] = value.replace(r"{token}", actual_token)
 
     def process_list_of_dicts(lst, actual_key, actual_token):
         for item in lst:

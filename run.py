@@ -288,7 +288,11 @@ def main():
 
             query_example = "Create return my facebook user if"
 
-            print(f"os.environ['FACEBOOK_ACCESS_TOKEN']: {os.environ['FACEBOOK_ACCESS_TOKEN']}")
+            replace_api_credentials_in_json(
+                # ## to replace all the key and token variables in the specs file with real values
+                scenario=scenario,
+                actual_token=os.environ["FACEBOOK_ACCESS_TOKEN"]
+            )
 
             replace_api_credentials(
                 model="api_selector",

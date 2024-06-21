@@ -226,7 +226,7 @@ class Caller(Chain):
         elif action == "POST":
             params = data.get("params")
             request_body = data.get("data")
-            request_body['access_token'] = os.environ["FACEBOOK_ACCESS_TOKEN"]  # TODO: To make sure the correct token is used. This is to avoid error dur to LLM failing to set the token
+            # request_body['access_token'] = os.environ["FACEBOOK_ACCESS_TOKEN"]  # TODO: To make sure the correct token is used. This is to avoid error dur to LLM failing to set the token
             print("------------------- POST --------------------------")
             print(f"data: {data}")
             response = self.requests_wrapper.post(data["url"], params=params, data=request_body)
