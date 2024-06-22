@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "14164f9f-ed7a-4f44-bf08-56a6547ed798",
+		"name": "facebook",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25011463"
+	},
+	"item": [
+		{
+			"name": "my_id_name",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "my_pages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://graph.facebook.com/v20.0/me/accounts?access_token=EAAzDsFohsWwBOzXQrpAwNhoNkQvOnl6k1OdmCkAoAoIV6FvVOb30tNZAB67ca9ZC6YiesEsRaujPojVVljeGpOUhobzZB9ntojl3Ej3daIZBQ5FAbV0MoOnTGQW0Qm62Rq9tTkCgcwEAFmP7GPDW9zCw2Xh1SVGQOlpF94AXEstX3yInsMk6XOE4m6RarZBvFMshpoQtAQJpKfZCKyqZAwZD",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"facebook",
+						"com"
+					],
+					"path": [
+						"v20.0",
+						"me",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "EAAzDsFohsWwBOzXQrpAwNhoNkQvOnl6k1OdmCkAoAoIV6FvVOb30tNZAB67ca9ZC6YiesEsRaujPojVVljeGpOUhobzZB9ntojl3Ej3daIZBQ5FAbV0MoOnTGQW0Qm62Rq9tTkCgcwEAFmP7GPDW9zCw2Xh1SVGQOlpF94AXEstX3yInsMk6XOE4m6RarZBvFMshpoQtAQJpKfZCKyqZAwZD"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_on_page",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"Hello world!\",\n    \"access_token\": \"EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://graph.facebook.com/v20.0/331866956681863/feed",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"facebook",
+						"com"
+					],
+					"path": [
+						"v20.0",
+						"331866956681863",
+						"feed"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "EAAzDsFohsWwBO6lforI97W4C7mAhlsIFQZBpMDAMhwwVZCgvx2BE4xDP79NjSMQzk4rX5Hsb23rfIjPM744ZBKTVjnWraukX1VfnbqGnZAzEUhrWuoOrnej8jZCChCOKIM19ihc2FjDkRglb1xzutvGfCSbKArOkIBYeZAPlajObrEhX7Vfo9ZBY6Q6",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_photo_on_page",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"https://raw.githubusercontent.com/bationoA/benin-multimodal-ai-hackathon/main/assets/images/output-1.png\",\n    \"message\": \"Visit Benin Now!\",\n    \"access_token\": \"EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://graph.facebook.com/v20.0/331866956681863/photos",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"facebook",
+						"com"
+					],
+					"path": [
+						"v20.0",
+						"331866956681863",
+						"photos"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "EAAzDsFohsWwBO6lforI97W4C7mAhlsIFQZBpMDAMhwwVZCgvx2BE4xDP79NjSMQzk4rX5Hsb23rfIjPM744ZBKTVjnWraukX1VfnbqGnZAzEUhrWuoOrnej8jZCChCOKIM19ihc2FjDkRglb1xzutvGfCSbKArOkIBYeZAPlajObrEhX7Vfo9ZBY6Q6",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -33,6 +33,7 @@ class ApiLLM(Chain):
     max_iterations: Optional[int] = 15
     max_execution_time: Optional[float] = None
     early_stopping_method: str = "force"
+    our_user_query: str = ""
 
     def __init__(
             self,
@@ -44,11 +45,12 @@ class ApiLLM(Chain):
             parser_with_example: bool = False,
             simple_parser: bool = False,
             callback_manager: Optional[BaseCallbackManager] = None,
+            our_user_query: str = "",  # TODO: We added this
             **kwargs: Any,
     ) -> None:
         if scenario not in [
             "tmdb", "spotify", "stable", "calendar", "notion", "upclick",
-            "discord", "sheets", "trello", "jira", "salesforce", "your_scenario_name"
+            "discord", "sheets", "trello", "jira", "salesforce", "facebook"
         ]:
             raise ValueError(f"Invalid scenario {scenario}")
 
@@ -57,8 +59,10 @@ class ApiLLM(Chain):
 
         super().__init__(
             llm=llm, api_spec=api_spec, planner=planner, api_selector=api_selector, scenario=scenario,
-            requests_wrapper=requests_wrapper, simple_parser=simple_parser, callback_manager=callback_manager, **kwargs
+            requests_wrapper=requests_wrapper, simple_parser=simple_parser, callback_manager=callback_manager,
+            our_user_query=our_user_query, **kwargs
         )
+
 
     def save(self, file_path: Union[Path, str]) -> None:
         """Raise error - saving not supported for Agent Executors."""
@@ -151,7 +155,8 @@ class ApiLLM(Chain):
             finished = re.match(r"No API call needed.(.*)", api_plan)
             if not finished:
                 executor = Caller(llm=self.llm, api_spec=self.api_spec, scenario=self.scenario,
-                                  simple_parser=self.simple_parser, requests_wrapper=self.requests_wrapper)
+                                  simple_parser=self.simple_parser, requests_wrapper=self.requests_wrapper,
+                                  our_user_query=self.our_user_query)
                 execution_res = executor.run(api_plan=api_plan, background=api_selector_background)
             else:
                 execution_res = finished.group(1)

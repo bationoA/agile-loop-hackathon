@@ -1,0 +1,109 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Options title",
+    "description": "Description from options",
+    "version": "6.0.7-beta",
+    "termsOfService": "http://tos.myweb.com"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com"
+    }
+  ],
+  "paths": {
+    "/v20.0/me/accounts": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "my_pages",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{token}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/v20.0/331866956681863/feed": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "post_on_page",
+        "description": "Create a new post on a facebook page.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "message": "Hello world!",
+                  "access_token": "{token}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"},
+                "examples": {
+                  "response": {
+                    "value": {"id": "{{id}}"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v20.0/331866956681863/photos": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "post_photo_on_page",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "url": "https://raw.githubusercontent.com/bationoA/benin-multimodal-ai-hackathon/main/assets/images/output-1.png",
+                  "message": "Visit Benin Now!",
+                  "access_token": "{token}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {"id": "122095160744377691", "post_id": "331866956681863_122095160834377691"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

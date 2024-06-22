@@ -72,7 +72,7 @@ async def handle_interaction(
     
     requests_wrapper = Requests(headers=headers)
     
-    llm = OpenAI(model_name="gpt-4", temperature=0.0, max_tokens=700)
+    llm = OpenAI(model_name=os.environ["OPENAI_MODEL"], temperature=0.0, max_tokens=700)
     api_llm = ApiLLM(
         llm,
         api_spec=api_spec,

@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from typing import Any, Dict, List, Optional, Tuple
 from copy import deepcopy
 import yaml
@@ -17,13 +18,11 @@ from langchain.llms.base import BaseLLM
 
 from utils import simplify_json, get_matched_endpoint, ReducedOpenAPISpec, fix_json_error
 from .parser import ResponseParser
+
 # from .parser import SimpleResponseParser
 
 
 logger = logging.getLogger(__name__)
-
-
-
 
 CALLER_PROMPT = """You are an agent that gets a sequence of API calls and given their documentation, should execute them and return the final response.
 If you cannot complete them and run into issues, you should explain the issue. If you're able to resolve an API call, you can retry the API call. When interacting with API objects, you should extract ids for inputs to other API calls but ids and names for outputs returned to the User.
@@ -116,6 +115,60 @@ Thought: {agent_scratchpad}
 """
 
 
+class Dalle3Model:
+    config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
+    os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
+    del config
+
+    _url = "https://api.openai.com/v1/images/generations"
+    _headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
+    }
+    _prompt = "You are Facebook content creator. you always generate an image captivating social image based " \
+              "on a text provided by the user. generate a social media image for a Facebook post based on the" \
+              " below text. \n"
+
+    def __init__(self, user_content: str, image_size: str = "1024x1024", quality: str = "standard"):
+        self.user_content = user_content
+        self.image_size = image_size
+        self.quality = quality
+
+    @property
+    def url(self) -> str:
+        return self._url
+
+    @property
+    def headers(self) -> dict:
+        return self._headers
+
+    @property
+    def prompt(self) -> str:
+        return self._prompt
+
+    def get_images_url(self) -> str | None:
+        if self.prompt == "" and self.user_content == "":
+            print("Error: Please provide `prompt` and/or `user_content`")
+            return None
+
+        data = {
+            "model": "dall-e-3",
+            "prompt": self.prompt + self.user_content,
+            "size": self.image_size,
+            "quality": self.quality,
+            "n": 1
+        }
+        response = requests.post(self.url, headers=self.headers, data=json.dumps(data))
+
+        if response.status_code == 200:
+            response_data = response.json()
+            return response_data['data'][0]['url']
+        else:
+            print("Error in generating image. Error code:", response.status_code)
+            print(response.json())
+
+        return None
+
 
 class Caller(Chain):
     llm: BaseLLM
@@ -128,9 +181,13 @@ class Caller(Chain):
     simple_parser: bool = False
     with_response: bool = False
     output_key: str = "result"
+    our_user_query: str = ""
 
-    def __init__(self, llm: BaseLLM, api_spec: ReducedOpenAPISpec, scenario: str, requests_wrapper: RequestsWrapper, simple_parser: bool = False, with_response: bool = False) -> None:
-        super().__init__(llm=llm, api_spec=api_spec, scenario=scenario, requests_wrapper=requests_wrapper, simple_parser=simple_parser, with_response=with_response)
+    def __init__(self, llm: BaseLLM, api_spec: ReducedOpenAPISpec, scenario: str, requests_wrapper: RequestsWrapper,
+                 simple_parser: bool = False, with_response: bool = False, our_user_query: str = "") -> None:
+        super().__init__(llm=llm, api_spec=api_spec, scenario=scenario, requests_wrapper=requests_wrapper,
+                         simple_parser=simple_parser, with_response=with_response, our_user_query=our_user_query)
+        self.our_user_query = our_user_query
 
     @property
     def _chain_type(self) -> str:
@@ -139,22 +196,22 @@ class Caller(Chain):
     @property
     def input_keys(self) -> List[str]:
         return ["api_plan"]
-    
+
     @property
     def output_keys(self) -> List[str]:
         return [self.output_key]
-    
+
     def _should_continue(self, iterations: int, time_elapsed: float) -> bool:
         if self.max_iterations is not None and iterations >= self.max_iterations:
             return False
         if (
-            self.max_execution_time is not None
-            and time_elapsed >= self.max_execution_time
+                self.max_execution_time is not None
+                and time_elapsed >= self.max_execution_time
         ):
             return False
 
         return True
-    
+
     @property
     def observation_prefix(self) -> str:
         """Prefix to append the observation with."""
@@ -164,16 +221,16 @@ class Caller(Chain):
     def llm_prefix(self) -> str:
         """Prefix to append the llm call with."""
         return "Thought: "
-    
+
     @property
     def _stop(self) -> List[str]:
         return [
             f"\n{self.observation_prefix.rstrip()}",
             f"\n\t{self.observation_prefix.rstrip()}",
         ]
-    
+
     def _construct_scratchpad(
-        self, history: List[Tuple[str, str]]
+            self, history: List[Tuple[str, str]]
     ) -> str:
         if len(history) == 0:
             return ""
@@ -196,12 +253,12 @@ class Caller(Chain):
         action_input = match.group(2)
         if action not in ["GET", "POST", "DELETE", "PUT"]:
             raise NotImplementedError
-        
+
         # avoid error in the JSON format
         action_input = fix_json_error(action_input)
 
         return action, action_input
-    
+
     def _get_response(self, action: str, action_input: str) -> str:
         action_input = action_input.strip().strip('`')
         left_bracket = action_input.find('{')
@@ -211,7 +268,7 @@ class Caller(Chain):
             data = json.loads(action_input)
         except json.JSONDecodeError as e:
             raise e
-        
+
         desc = data.get("description", "No description")
         query = data.get("output_instructions", None)
 
@@ -225,7 +282,20 @@ class Caller(Chain):
         elif action == "POST":
             params = data.get("params")
             request_body = data.get("data")
+            # request_body['access_token'] = os.environ["FACEBOOK_ACCESS_TOKEN"]  # TODO: To make sure the correct token is used. This is to avoid error dur to LLM failing to set the token
+            print("------------------- POST --------------------------")
+            if self.scenario == "facebook":
+                if "create an image" in self.our_user_query.lower():
+                    image_url = Dalle3Model(user_content=request_body.get("message")).get_images_url()
+                    request_body["url"] = image_url
+
+                    data["url"] = data["url"].replace("feed", "photos")
+            print(f"scenario: {self.scenario}")
+            print(f"query: {query}")
+            print(f"data: {data}")
             response = self.requests_wrapper.post(data["url"], params=params, data=request_body)
+            print(f"response type: {type(response)}")
+            print(f"response: {response}")
         elif action == "PUT":
             params = data.get("params")
             request_body = data.get("data")
@@ -236,7 +306,7 @@ class Caller(Chain):
             response = self.requests_wrapper.delete(data["url"], params=params, json=request_body)
         else:
             raise NotImplementedError
-        
+
         if isinstance(response, requests.models.Response):
             if response.status_code != 200:
                 return response.text
@@ -245,9 +315,9 @@ class Caller(Chain):
             response_text = response
         else:
             raise NotImplementedError
-        
+
         return response_text, params, request_body, desc, query
-    
+
     def _call(self, inputs: Dict[str, str]) -> Dict[str, str]:
         iterations = 0
         time_elapsed = 0.0
@@ -266,7 +336,7 @@ class Caller(Chain):
         assert len(matched_endpoints) == 1, f"Found {len(matched_endpoints)} matched endpoints, but expected 1."
         endpoint_name = matched_endpoints[0]
         tmp_docs = deepcopy(endpoint_docs_by_name.get(endpoint_name))
-        
+
         print("TEMP DOCS: CALLER 261:")
         print(tmp_docs, "\n\n")
 
@@ -280,7 +350,7 @@ class Caller(Chain):
         if not self.with_response and 'responses' in tmp_docs:
             tmp_docs.pop("responses")
         tmp_docs = yaml.dump(tmp_docs)
-        encoder = tiktoken.encoding_for_model('gpt-4')
+        encoder = tiktoken.encoding_for_model(os.environ["OPENAI_MODEL"])
         encoded_docs = encoder.encode(tmp_docs)
         if len(encoded_docs) > 1500:
             tmp_docs = encoder.decode(encoded_docs[:1500])
@@ -296,12 +366,13 @@ class Caller(Chain):
             },
             input_variables=["api_plan", "background", "agent_scratchpad"],
         )
-        
+
         caller_chain = LLMChain(llm=self.llm, prompt=caller_prompt)
 
         while self._should_continue(iterations, time_elapsed):
             scratchpad = self._construct_scratchpad(intermediate_steps)
-            caller_chain_output = caller_chain.run(api_plan=api_plan, background=inputs['background'], agent_scratchpad=scratchpad, stop=self._stop)
+            caller_chain_output = caller_chain.run(api_plan=api_plan, background=inputs['background'],
+                                                   agent_scratchpad=scratchpad, stop=self._stop)
             logger.info(f"Caller: {caller_chain_output}")
 
             action, action_input = self._get_action_and_input(caller_chain_output)
@@ -316,7 +387,7 @@ class Caller(Chain):
             print(f"COMPLETE URL: {json.loads(action_input)['url']}")
             # print(f"BASE URL: {api_url}")
             # print(f"FINAL URL: {json.loads(action_input)['url'].replace(api_url, '')}")
-            
+
             called_endpoint_name = get_matched_endpoint(self.api_spec, called_endpoint_name)[0]
             print(f"CALLER 321: API URL: {api_url}")
             api_path = api_url + called_endpoint_name.split(' ')[-1]
@@ -334,13 +405,15 @@ class Caller(Chain):
                             search_type = param.split('=')[-1] + 's'
                             break
                 # api_doc_for_parser['responses']['content']['application/json']["schema"]['properties'] = {search_type: api_doc_for_parser['responses']['content']['application/json']["schema"]['properties'][search_type]}
-                api_doc_for_parser['responses']['content']['application/json'] = {search_type: api_doc_for_parser['responses']['content']['application/json'][search_type]}
+                api_doc_for_parser['responses']['content']['application/json'] = {
+                    search_type: api_doc_for_parser['responses']['content']['application/json'][search_type]}
 
             if not self.simple_parser:
                 response_parser = ResponseParser(
                     llm=self.llm,
                     api_path=api_path,
                     api_doc=api_doc_for_parser,
+                    with_example=True  # TODO: We added this so that it considered example
                 )
             # else:
             #     response_parser = SimpleResponseParser(
@@ -353,7 +426,9 @@ class Caller(Chain):
                 "params": params if params is not None else "No parameters",
                 "data": request_body if request_body is not None else "No request body",
             }
-            parsing_res = response_parser.run(query=query, response_description=desc, api_param=params_or_data, json=response)
+
+            parsing_res = response_parser.run(query=query, response_description=desc, api_param=params_or_data,
+                                              json=response)
             logger.info(f"Parser: {parsing_res}")
 
             intermediate_steps.append((caller_chain_output, parsing_res))

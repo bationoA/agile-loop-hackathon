@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "8e28e7df-19a0-45c8-b08c-b87af11bcafb",
+		"name": "test_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25011463"
+	},
+	"item": [
+		{
+			"name": "google",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.google.com/search?q=Postman+Collection",
+					"protocol": "https",
+					"host": [
+						"www",
+						"google",
+						"com"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Postman+Collection"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -3,4 +3,10 @@ spotipy==2.23.0
 langchain==0.0.315
 colorama==0.4.6
 tiktoken==0.5.1
-openai==0.28.1
+openai==0.28
+
+requests~=2.32.3
+pydantic~=2.7.4
+mysql~=0.0.3
+mysql-connector-python~=8.4.0
+python-dotenv~=1.0.1

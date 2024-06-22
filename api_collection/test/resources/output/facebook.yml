@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: Options title
+  description: Description from options
+  version: 6.0.7-beta
+  termsOfService: http://tos.myweb.com
+servers:
+  - url: https://graph.facebook.com
+paths:
+  /v20.0/me/accounts:
+    get:
+      tags:
+        - default
+      summary: my_pages
+      parameters:
+        - name: access_token
+          in: query
+          schema:
+            type: string
+          example: >-
+            EAAzDsFohsWwBOzXQrpAwNhoNkQvOnl6k1OdmCkAoAoIV6FvVOb30tNZAB67ca9ZC6YiesEsRaujPojVVljeGpOUhobzZB9ntojl3Ej3daIZBQ5FAbV0MoOnTGQW0Qm62Rq9tTkCgcwEAFmP7GPDW9zCw2Xh1SVGQOlpF94AXEstX3yInsMk6XOE4m6RarZBvFMshpoQtAQJpKfZCKyqZAwZD
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v20.0/331866956681863/feed:
+    post:
+      tags:
+        - default
+      summary: post_on_page
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                message: Hello world!
+                access_token: >-
+                  EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v20.0/331866956681863/photos:
+    post:
+      tags:
+        - default
+      summary: post_photo_on_page
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                url: >-
+                  https://raw.githubusercontent.com/bationoA/benin-multimodal-ai-hackathon/main/assets/images/output-1.png
+                message: Visit Benin Now!
+                access_token: >-
+                  EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

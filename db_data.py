@@ -2,13 +2,15 @@ import mysql.connector
 import random
 from flask import Flask, request, render_template
 import os
+
 app = Flask(__name__)
 
 # Replace with your database connection details
 db_config = {
     'host': 'localhost',
-    'database': 'llamadb',
-    'user': 'root',
+    'port': 3333,
+    'database': 'synapse-copilot',
+    'user': 'agileloop',
     'password': '123456',
 }
 

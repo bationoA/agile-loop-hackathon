@@ -2,12 +2,19 @@ from helper import *
 import mysql.connector
 import random
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 logger = logging.getLogger()
 
 
+
+
 def main():
     config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
+    os.environ["OPENAI_MODEL"] = config["OPENAI_MODEL"]  # TODO: We added this line
     os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
 
     logging.basicConfig(
@@ -16,9 +23,10 @@ def main():
     )
     logger.setLevel(logging.INFO)
 
-    scenario = input(
-        "Please select a scenario (trello/jira/salesforce): "
-    )
+    # scenario = input(
+    #     "Please select a scenario (facebook/trello/jira/salesforce): "
+    # )
+    scenario = "facebook"
 
     scenario = scenario.lower()
     api_spec, headers = None, None
@@ -26,9 +34,10 @@ def main():
     # database connection details
     db_config = {
         'host': 'localhost',
-        'database': 'llamadb',
+        'port': 3333,
+        'database': 'synapse-copilot',
         'user': 'root',
-        'password': '123456',
+        # 'password': '123456',
     }
 
     # Connect to the MySQL server
@@ -193,7 +202,7 @@ def main():
                 print("Key is not present in the database")
                 return ""
         replace_api_credentials_in_json(
-            ###to replace all the key and token variables in the specs file with real values
+            # ## to replace all the key and token variables in the specs file with real values
             scenario=scenario,
             actual_key=key,
             actual_token=token
@@ -250,6 +259,54 @@ def main():
             token=access_token,
         )
         query_example = "Create a new folder with name 'abc_folder'"
+
+    # TODO -------------- WE STARTED HERE ----------------------------------
+    elif scenario == "facebook":
+        if user_id is not None:
+            try:
+                ser_qu = f"SELECT * FROM facebook_credentials WHERE user_id = {user_id};"
+                cursor.execute(ser_qu)
+                res = cursor.fetchone()
+                access_token = res[1]
+
+                os.environ["FACEBOOK_ACCESS_TOKEN"] = access_token
+
+                dic = {
+                    "user_id": user_id,
+                    "user_access_token": access_token
+                }
+                # print(dic)
+            except:
+                print("Key is not present in the database")
+                return ""
+
+            api_spec, headers = process_spec_file(
+                # to make the specs file minfy or smaller for better processing
+                file_path="specs/facebook_oas.json",
+                token=os.environ["FACEBOOK_ACCESS_TOKEN"]
+            )
+
+            query_example = "Create return my facebook user if"
+
+            replace_api_credentials_in_json(
+                # ## to replace all the key and token variables in the specs file with real values
+                scenario=scenario,
+                actual_token=os.environ["FACEBOOK_ACCESS_TOKEN"]
+            )
+
+            replace_api_credentials(
+                model="api_selector",
+                scenario=scenario,
+                actual_token=os.environ["FACEBOOK_ACCESS_TOKEN"]
+            )
+            replace_api_credentials(
+                model="planner",
+                scenario=scenario,
+                actual_token=os.environ["FACEBOOK_ACCESS_TOKEN"]
+            )
+
+        # ----------- END facebook scenario ---------------
+        # TODO -------------- WE FINISHED HERE ----------------------------------
     else:
         raise ValueError(f"Unsupported scenario: {scenario}")
 
@@ -260,13 +317,13 @@ def main():
 
     # text-davinci-003
 
-    llm = OpenAI(model_name="gpt-4", temperature=0.0, max_tokens=1024)
+    llm = OpenAI(model_name=os.environ["OPENAI_MODEL"], temperature=0.0, max_tokens=1024)
     api_llm = ApiLLM(
         llm,
         api_spec=api_spec,
         scenario=scenario,
         requests_wrapper=requests_wrapper,
-        simple_parser=False,
+        simple_parser=False
     )
 
     print(f"Example instruction: {query_example}")
@@ -277,6 +334,8 @@ def main():
         query = query_example
 
     logger.info(f"Query: {query}")
+
+    api_llm.our_user_query = query
 
     start_time = time.time()
     api_llm.run(query)

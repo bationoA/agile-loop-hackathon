@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: Options title
+  description: Description from options
+  version: 6.0.7-beta
+  termsOfService: http://tos.myweb.com
+servers:
+  - url: https://www.google.com
+paths:
+  /search:
+    get:
+      tags:
+        - default
+      summary: google
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+          example: Postman+Collection
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
