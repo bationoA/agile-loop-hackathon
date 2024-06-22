@@ -323,7 +323,7 @@ def main():
         api_spec=api_spec,
         scenario=scenario,
         requests_wrapper=requests_wrapper,
-        simple_parser=False,
+        simple_parser=False
     )
 
     print(f"Example instruction: {query_example}")
@@ -334,6 +334,8 @@ def main():
         query = query_example
 
     logger.info(f"Query: {query}")
+
+    api_llm.our_user_query = query
 
     start_time = time.time()
     api_llm.run(query)

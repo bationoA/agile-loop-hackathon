@@ -6,3 +6,12 @@ API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Hello 
 API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
 Thought: I have finished the execution plan and created a post on the page "Test page".
 Final Answer: I have created a post on the page "Test page".
+
+Example 2:
+Background: You are a facebook content creator. You always generate 1 paragraph of text based on user resquest. The access_token is "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti".
+User query: "Create post a post about bees extinction on my facebook page 'Test page'"
+Plan step 1: Create a facebook post about bees extinction on page "Test page"
+API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token=EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti}
+API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
+Thought: I have finished the execution plan and created a post about bees extinction on the page "Test page".
+Final Answer: I have created a post about bees extinction on the page "Test page".
