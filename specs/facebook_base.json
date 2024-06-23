@@ -43,8 +43,8 @@
         "tags": [
           "default"
         ],
-        "summary": "post_on_page",
-        "description": "Create a new post on a facebook page.",
+        "summary": "Post a text content on a Facebook page",
+        "description": "When provided a text, make a new post with that text and on the facebook page. The context is only for text.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -100,6 +100,44 @@
             "description": "Successful response",
             "content": {
               "application/json": {"id": "122095160744377691", "post_id": "331866956681863_122095160834377691"}
+            }
+          }
+        }
+      }
+    },
+    "/v1/chat/completions": {
+      "generatetext": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Generate text",
+        "description": "Generate a text based on user request",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "prompt": "You are useful content generator. You always generate a text based on user's request.",
+                  "message": "Generate a text about climate change."
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"},
+                "examples": {
+                  "response": {
+                    "value": {"generated_text": "{{generated_text}}"}
+
+                  }
+                }
+              }
             }
           }
         }

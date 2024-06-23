@@ -15,6 +15,7 @@ from langchain.chains.llm import LLMChain
 from langchain.requests import RequestsWrapper
 from langchain.prompts.prompt import PromptTemplate
 from langchain.llms.base import BaseLLM
+from requests import Response
 
 from utils import simplify_json, get_matched_endpoint, ReducedOpenAPISpec, fix_json_error
 from .parser import ResponseParser
@@ -251,7 +252,7 @@ class Caller(Chain):
             raise ValueError(f"Could not parse LLM output: `{llm_output}`")
         action = match.group(1).strip()
         action_input = match.group(2)
-        if action not in ["GET", "POST", "DELETE", "PUT"]:
+        if action not in ["GET", "POST", "DELETE", "PUT", "GENERATETEXT"]:
             raise NotImplementedError
 
         # avoid error in the JSON format
@@ -284,12 +285,12 @@ class Caller(Chain):
             request_body = data.get("data")
             # request_body['access_token'] = os.environ["FACEBOOK_ACCESS_TOKEN"]  # TODO: To make sure the correct token is used. This is to avoid error dur to LLM failing to set the token
             print("------------------- POST --------------------------")
-            if self.scenario == "facebook":
-                if "create an image" in self.our_user_query.lower():
-                    image_url = Dalle3Model(user_content=request_body.get("message")).get_images_url()
-                    request_body["url"] = image_url
-
-                    data["url"] = data["url"].replace("feed", "photos")
+            # if self.scenario == "facebook":
+            #     if "create an image" in self.our_user_query.lower():
+            #         image_url = Dalle3Model(user_content=request_body.get("message")).get_images_url()
+            #         request_body["url"] = image_url
+            #
+            #         data["url"] = data["url"].replace("feed", "photos")
             print(f"scenario: {self.scenario}")
             print(f"query: {query}")
             print(f"data: {data}")
@@ -304,6 +305,25 @@ class Caller(Chain):
             params = data.get("params")
             request_body = data.get("data")
             response = self.requests_wrapper.delete(data["url"], params=params, json=request_body)
+        elif action == "GENERATETEXT":
+            # For using chat-gpt for text generation
+            url = "https://api.openai.com/v1/chat/completions"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
+            }
+
+            params = data.get("params")
+            request_body = data.get("data")
+            request_body["temperature"] = 0.8
+            raw_response = requests.post(url, headers=headers, data=json.dumps(request_body))
+
+            response = Response()
+            response.status_code = raw_response.status_code
+            raw_response = raw_response.json()
+            generated_text = raw_response['choices'][0]['message']['content']
+            generated_text_dict = {"generated_text": generated_text}
+            response._content = json.dumps(generated_text_dict).encode('utf-8')
         else:
             raise NotImplementedError
 

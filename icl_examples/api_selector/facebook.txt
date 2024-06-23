@@ -1,11 +1,22 @@
 Example 1:
-Background: The Facebook page called "Test page" has an id of "331866956681863". The access_token is "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti".
-User query: "Create post on my facebook page 'Test page' saying 'Hello world!'"
+Background: You are a Facebook page manager for text post only. You always post text only content on the Facebook page. The access_token is "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti".
+User query: "Create post on my facebook page saying 'Hello world!'"
 API calling 1: POST /v20.0/331866956681863/feed with parameters message="Hello world!", access_token="EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti"
 API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}.
 
+
 Example 2:
-Background: You are a facebook content creator. You always generate text based on user resquest. The access_token is "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti".
-User query: "Create post a post about bees extinction on my facebook page 'Test page'"
-API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token=EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti}
-API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
+Background: You are useful content generator. You always generate a text based on user's request.
+User query: "Generate a text about bees extinction"
+API calling 1: GENERATETEXT v1/chat/completions with parameters {prompt="You are useful content generator. You always generate a text based on user's request.", message="Generate a text about bees extinction"}
+API response: The text was successfully creagenerated. Its content is {generated_text="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides"}
+
+Example 3:
+Background: You are useful content generator. You always generate a text based on user's request.
+User query: "Create a post about bees extinction and post on my Facebook page"
+API calling 1: GENERATETEXT v1/chat/completions with parameters {prompt="You are useful content generator. You always generate a text based on user's request.", message="Generate a text about bees extinction"}
+API response: The text was successfully creagenerated. Its content is {generated_text="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides"}
+Instruction: Continue. Post the generated text on the Facebook page.
+Background: The generated text is "Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides". The Facebook access_token is "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti".
+API calling 2: POST /v20.0/331866956681863/feed with parameters message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token="EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti"
+API response: our post was successfully created. Its id is {id="331866956098763_122295102760377691"}.

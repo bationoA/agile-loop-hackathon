@@ -1,3 +1,4 @@
+from custom_package import ScenarioSelector
 from helper import *
 import mysql.connector
 import random
@@ -26,7 +27,29 @@ def main():
     # scenario = input(
     #     "Please select a scenario (facebook/trello/jira/salesforce): "
     # )
-    scenario = "facebook"
+    # scenario = "facebook"
+    # scenario = ""
+    query = input(
+        "Please input an instruction (Press ENTER to use the example instruction): "
+    )
+
+    scenario_selector = ScenarioSelector(user_content=query)
+
+    scenario = scenario_selector.get_response()
+    # while True:
+    #     query = input(
+    #         "Please input an instruction (Press ENTER to use the example instruction): "
+    #     )
+    #
+    #     scenario_selector = ScenarioSelector(user_content=query)
+    #
+    #     scenario = scenario_selector.get_response()
+    #
+    #     print(f"selected_scenario: {scenario}")
+    #
+    #     if scenario == "None":
+    #         print("Please retry by specifying the plateforme. Or, maybe the plateforme you specified is not yet "
+    #               "supported")
 
     scenario = scenario.lower()
     api_spec, headers = None, None
@@ -44,8 +67,8 @@ def main():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    user_id = int(input("Enter the user id: "))
-
+    # user_id = int(input("Enter the user id: "))
+    user_id = 1
     if scenario == "tmdb":
         os.environ["TMDB_ACCESS_TOKEN"] = config["tmdb_access_token"]
         api_spec, headers = process_spec_file(
@@ -326,12 +349,9 @@ def main():
         simple_parser=False
     )
 
-    print(f"Example instruction: {query_example}")
-    query = input(
-        "Please input an instruction (Press ENTER to use the example instruction): "
-    )
-    if query == "":
-        query = query_example
+    # query = input(
+    #     "Please input an instruction (Press ENTER to use the example instruction): "
+    # )
 
     logger.info(f"Query: {query}")
 

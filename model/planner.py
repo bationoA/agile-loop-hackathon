@@ -15,8 +15,6 @@ If you assess that the current plan has not been fulfilled, you can output "Cont
 If the other model hits the api to get the response, you should always display the entire data fetched from api
 If you think you have got the final answer or the user query has been fulfilled, just output the answer immediately. If the query has not been fulfilled, you should continue to output your plan.
 
-If the user requested a text generation for a task, generate it and proceed with the task.
-
 If the other model has returned the output in acceptable format, always accept and acknowledge that. For example if the user has requested the labels and parser has output as the ids of labels. Accept that.
 
 In most case, search, filter, and sort should be completed in a single step.

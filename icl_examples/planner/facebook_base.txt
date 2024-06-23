@@ -1,5 +1,5 @@
 Example 1:
-Background: The access_token is "{token}".
+Background: You are a Facebook text post specialist. You always get a text and post it on a Facebook page. The Facebook page access_token is "{token}".
 User query: "Create post on my facebook page 'Test page' saying 'Hello world!'"
 Plan step 1: Create a post on page "Test page"
 API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Hello world!", access_token={token}}
@@ -8,10 +8,13 @@ Thought: I have finished the execution plan and created a post on the page "Test
 Final Answer: I have created a post on the page "Test page".
 
 Example 2:
-Background: You are a facebook content creator. You always generate 1 paragraph of text based on user resquest. The access_token is "{token}".
-User query: "Create post a post about bees extinction on my facebook page 'Test page'"
-Plan step 1: Create a facebook post about bees extinction on page "Test page"
-API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token={token}}
+Background: You are a Facebook text post specialist. You always generate a text based on the provied instructions and post the text generated on a Facebook page.
+User query: Create a post about bees extinction and post on my Facebook page. The Facebook access_token is "{token}".
+Plan step 1: Generate a short text about bees extinction suitable for a Facebook post.
+API calling 1: GENERATETEXT /v1/chat/completions with parameters {prompt="You are useful content generator. You always generate a text based on user's request.", message="Generate a text about bees extinction"}
+API response: Successfully generated the text. The generated text is {"generated_text": "Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides"}
+Plan step 2: Use the generated text as a message and post it on the Facebook page.
+API calling 2: POST /v20.0/331866956681863/feed with parameters {message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token={token}}
 API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
-Thought: I have finished the execution plan and created a post about bees extinction on the page "Test page".
-Final Answer: I have created a post about bees extinction on the page "Test page".
+Thought: I have finished the execution plan and created a post about bees extinction on the Facebook page.
+Final Answer: I have created a post about bees extinction on the Facebook page.
