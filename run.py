@@ -35,7 +35,8 @@ def main():
 
     scenario_selector = ScenarioSelector(user_content=query)
 
-    scenario = scenario_selector.get_response()
+    # scenario = scenario_selector.get_response()
+    scenario = "facebook"
     # while True:
     #     query = input(
     #         "Please input an instruction (Press ENTER to use the example instruction): "

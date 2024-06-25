@@ -35,7 +35,7 @@ Starting below, you should follow this format:
 
 Background: background information which you can use to execute the plan, e.g., the id of a person, the id of tracks by Faye Wong. In most cases, you must use the background information instead of requesting these information again. For example, if the query is "get the poster for any other movie directed by Wong Kar-Wai (12453)", and the background includes the movies directed by Wong Kar-Wai, you should use the background information instead of requesting the movies directed by Wong Kar-Wai again.
 User query: the query a User wants help with related to the API
-API calling 1: the first api call you want to make. Note the API calling can contain conditions such as filtering, sorting, etc. For example, "GET /movie/18329/credits to get the director of the movie Happy Together", "GET /movie/popular to get the top-1 most popular movie". If user query contains some filter condition, such as the latest, the most popular, the highest rated, then the API calling plan should also contain the filter condition. If you think there is no need to call an API, output "No API call needed." and then output the final answer according to the user query and background information.
+API calling 1: the first api call you want to make. Note the API calling can contain conditions such as filtering, sorting, etc. For example, "GET /movie/18329/credits to get the director of the movie Happy Together", "GET /movie/popular to get the top-1 most popular movie". If user query contains some filter condition, such as the latest, the most popular, the highest rated, then the API calling plan should also contain the filter condition. 
 API response: the response of API calling 1
 Instruction: Another model will evaluate whether the user query has been fulfilled. If the instruction contains "continue", then you should make another API call following this instruction.
 ... (this API calling n and API response can repeat N times, but most queries can be solved in 1-2 step)
@@ -43,7 +43,7 @@ Instruction: Another model will evaluate whether the user query has been fulfill
 
 {icl_examples}
 
-You should use the values of paramters if specified in the available examples.
+You should use the values of parameters if specified in the available examples.
 If you are getting the string with the description of how you will perform the specific task, you have to use those details as a parameter for calling desired API. For example if plan is to createa an event for date 12th december 2023, ending at 13th december 2023, you will replace these values with appropriate parameter variables while calling the API. If the task is to create a sheet with title "Gym Workout", pass the title in parameters of API call.
 
 

@@ -146,11 +146,16 @@ class ApiLLM(Chain):
         plan = self.planner.run(input=query, history=planner_history)
         logger.info(f"Planner: {plan}")
 
+        print(f"query: {query}")
+
         while self._should_continue(iterations, time_elapsed):
             tmp_planner_history = [plan]
             api_selector_history: List[Tuple[str, str, str]] = []
             api_selector_background = self._get_api_selector_background(planner_history)
             api_plan = self.api_selector.run(plan=plan, background=api_selector_background)
+
+            print(f"while 1: api_plan: {api_plan}")
+            print(f"while 1: api_selector_background: {api_selector_background}")
 
             finished = re.match(r"No API call needed.(.*)", api_plan)
             if not finished:
@@ -158,19 +163,28 @@ class ApiLLM(Chain):
                                   simple_parser=self.simple_parser, requests_wrapper=self.requests_wrapper,
                                   our_user_query=self.our_user_query)
                 execution_res = executor.run(api_plan=api_plan, background=api_selector_background)
+
             else:
                 execution_res = finished.group(1)
+
+            print(f"while 1: execution_res: {execution_res}")
 
             planner_history.append((plan, execution_res))
             api_selector_history.append((plan, api_plan, execution_res))
 
+            print(f"while 1: planner_history: {planner_history}")
+            print(f"while 1: api_selector_history: {api_selector_history}")
+
             plan = self.planner.run(input=query, history=planner_history)
-            logger.info(f"Planner: {plan}")
+            logger.info(f"while 1: Planner: {plan}")
 
             while self._should_continue_plan(plan):
                 api_selector_background = self._get_api_selector_background(planner_history)
                 api_plan = self.api_selector.run(plan=tmp_planner_history[0], background=api_selector_background,
                                                  history=api_selector_history, instruction=plan)
+
+                print(f"while 2: api_selector_background: {api_selector_background}")
+                print(f"while 2: api_plan: {api_plan}")
 
                 finished = re.match(r"No API call needed.(.*)", api_plan)
                 if not finished:
@@ -180,11 +194,16 @@ class ApiLLM(Chain):
                 else:
                     execution_res = finished.group(1)
 
+                print(f"while 2: execution_res: {execution_res}")
+
                 planner_history.append((plan, execution_res))
                 api_selector_history.append((plan, api_plan, execution_res))
 
+                print(f"while 2: planner_history: {planner_history}")
+                print(f"while 2: api_selector_history: {api_selector_history}")
+
                 plan = self.planner.run(input=query, history=planner_history)
-                logger.info(f"Planner: {plan}")
+                logger.info(f"while 2: Planner: {plan}")
 
             if self._should_end(plan):
                 break

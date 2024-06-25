@@ -36,7 +36,7 @@ Endpoints:
 {api_docs}
 
 In the provided Endpoints which are {api_docs}, you must not change the values present in "{{}}". For example, if the path is "/users/{{user_id}}/tweets", keep the "{{user_id}}" with api endpoint as it is in your output url. If the endpoint is GET /calendar/v3/calendars/{{calendarId}}/events, keep the output url as it is. 
-You can use https request method, i.e., GET, POST, DELETE, PATCH, PUT, and generate the corresponding parameters according to the API documentation and the plan.
+You can use https request method, i.e., GET, POST, DELETE, PATCH, PUT, GENERATETEXT, GENERATEIMAGE, and generate the corresponding parameters according to the API documentation and the plan.
 The input should be a JSON string which has 3 base keys: url, description, output_instructions
 The value of "url" should be a string. If the API path contains "{{}}", it means that it is a variable, don't replace it. For example, if the path is "/users/{{user_id}}/tweets", keep the "{{user_id}}" with api endpoint as it is. If the endpoint is GET /calendar/v3/calendars/{{calendarId}}/events, use the endpoint as it is.  
 The value of "description" should describe what the API response is about. The description should be specific.
@@ -77,6 +77,30 @@ Input: {{
     "description": "Set the volume for the current playback device."
 }}
 
+
+Example 4:
+Operation: GENERATETEXT
+Input: {{
+    "url": "https://api.openai.com/v1/chat/completions",
+    "params": {{
+        "prompt": "You are a talented content creator.",
+        "message": "Generate a text about life."
+    }},
+    "description": "Generate a text."
+}}
+
+
+Example 5:
+Operation: GENERATEIMAGE
+Input: {{
+    "url": "https://api.openai.com/v1/images/generations",
+    "params": {{
+        "message": "Generate an of a red car."
+    }},
+    "description": "text to image generator.",
+    "output_instructions": "Return the url of the generated image."
+}}
+
 If the "params" or "data" key in path contains "{{}}", it means that it is a variable and you should replace it with the appropriate value.
 
 I will give you the background information and the plan you should execute.
@@ -114,61 +138,9 @@ Background: {background}
 Plan: {api_plan}
 Thought: {agent_scratchpad}
 """
-
-
-class Dalle3Model:
-    config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
-    os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
-    del config
-
-    _url = "https://api.openai.com/v1/images/generations"
-    _headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
-    }
-    _prompt = "You are Facebook content creator. you always generate an image captivating social image based " \
-              "on a text provided by the user. generate a social media image for a Facebook post based on the" \
-              " below text. \n"
-
-    def __init__(self, user_content: str, image_size: str = "1024x1024", quality: str = "standard"):
-        self.user_content = user_content
-        self.image_size = image_size
-        self.quality = quality
-
-    @property
-    def url(self) -> str:
-        return self._url
-
-    @property
-    def headers(self) -> dict:
-        return self._headers
-
-    @property
-    def prompt(self) -> str:
-        return self._prompt
-
-    def get_images_url(self) -> str | None:
-        if self.prompt == "" and self.user_content == "":
-            print("Error: Please provide `prompt` and/or `user_content`")
-            return None
-
-        data = {
-            "model": "dall-e-3",
-            "prompt": self.prompt + self.user_content,
-            "size": self.image_size,
-            "quality": self.quality,
-            "n": 1
-        }
-        response = requests.post(self.url, headers=self.headers, data=json.dumps(data))
-
-        if response.status_code == 200:
-            response_data = response.json()
-            return response_data['data'][0]['url']
-        else:
-            print("Error in generating image. Error code:", response.status_code)
-            print(response.json())
-
-        return None
+config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
+os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
+os.environ["OPENAI_MODEL"] = config["OPENAI_MODEL"]
 
 
 class Caller(Chain):
@@ -252,7 +224,7 @@ class Caller(Chain):
             raise ValueError(f"Could not parse LLM output: `{llm_output}`")
         action = match.group(1).strip()
         action_input = match.group(2)
-        if action not in ["GET", "POST", "DELETE", "PUT", "GENERATETEXT"]:
+        if action not in ["GET", "POST", "DELETE", "PUT", "GENERATETEXT", "GENERATEIMAGE"]:
             raise NotImplementedError
 
         # avoid error in the JSON format
@@ -274,6 +246,12 @@ class Caller(Chain):
         query = data.get("output_instructions", None)
 
         params, request_body = None, None
+
+        if "v1/chat/completions" in data["url"]:
+            action = "GENERATETEXT"
+        elif "v1/images/generations" in data["url"]:
+            action = "GENERATEIMAGE"
+
         if action == "GET":
             if 'params' in data:
                 params = data.get("params")
@@ -305,7 +283,7 @@ class Caller(Chain):
             params = data.get("params")
             request_body = data.get("data")
             response = self.requests_wrapper.delete(data["url"], params=params, json=request_body)
-        elif action == "GENERATETEXT":
+        elif action == "GENERATETEXT":  # For text generation
             # For using chat-gpt for text generation
             url = "https://api.openai.com/v1/chat/completions"
             headers = {
@@ -315,15 +293,47 @@ class Caller(Chain):
 
             params = data.get("params")
             request_body = data.get("data")
-            request_body["temperature"] = 0.8
+            request_body["model"] = os.environ["OPENAI_MODEL"]
+
+            message_text = request_body["message"]
+            prompt_text = request_body["prompt"]
+            del request_body["message"]
+            del request_body["prompt"]
+            request_body["messages"] = [
+                {"role": "system", "content": prompt_text},
+                {"role": "user", "content": message_text}
+            ]
+
+            request_body["temperature"] = 1
             raw_response = requests.post(url, headers=headers, data=json.dumps(request_body))
 
             response = Response()
             response.status_code = raw_response.status_code
             raw_response = raw_response.json()
+            print(f"data in GENERATETEXT: {data}")
+            print(f"raw_response: {raw_response}")
             generated_text = raw_response['choices'][0]['message']['content']
             generated_text_dict = {"generated_text": generated_text}
             response._content = json.dumps(generated_text_dict).encode('utf-8')
+        elif action == "GENERATEIMAGE":  # For image generation
+            # For using chat-gpt for text generation
+            url = "https://api.openai.com/v1/images/generations"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
+            }
+
+            params = data.get("params")
+            request_body = data.get("data")
+            request_body["model"] = "dall-e-3"
+            raw_response = requests.post(url, headers=headers, data=json.dumps(request_body))
+
+            response = Response()
+            response.status_code = raw_response.status_code
+            raw_response = raw_response.json()
+            generated_image_dict = {"url": raw_response['data'][0]['url']}
+            print(f"generated_image_dict: {generated_image_dict}")
+            response._content = json.dumps(generated_image_dict).encode('utf-8')
         else:
             raise NotImplementedError
 
@@ -350,6 +360,11 @@ class Caller(Chain):
         print(api_plan, "\n\n")
 
         api_url = self.api_spec.servers[0]['url']
+
+        if "v1/chat/completions" in api_plan or "v1/images/generations" in api_plan:
+            api_url = "https://api.openai.com"
+
+        print(f"api_url: {api_url}")
         matched_endpoints = get_matched_endpoint(self.api_spec, api_plan)
         endpoint_docs_by_name = {name: docs for name, _, docs in self.api_spec.endpoints}
         api_doc_for_caller = ""
@@ -386,11 +401,12 @@ class Caller(Chain):
             },
             input_variables=["api_plan", "background", "agent_scratchpad"],
         )
-
+        print(f"caller_prompt: {caller_prompt}")
         caller_chain = LLMChain(llm=self.llm, prompt=caller_prompt)
 
         while self._should_continue(iterations, time_elapsed):
             scratchpad = self._construct_scratchpad(intermediate_steps)
+            print(f"inputs['background']: {inputs['background']}")
             caller_chain_output = caller_chain.run(api_plan=api_plan, background=inputs['background'],
                                                    agent_scratchpad=scratchpad, stop=self._stop)
             logger.info(f"Caller: {caller_chain_output}")

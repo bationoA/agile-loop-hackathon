@@ -23,7 +23,6 @@ API calling 1: GET /movie/18329/credits to get the director for the movie Happy 
 API response: The director of Happy Together is Wong Kar-Wai (12453)
 
 Example 4:
-
 Background: No background
 User query: search for the highest rated movie directed by Wong Kar-Wai
 API calling 1: GET /search/person to search for Wong Kar-Wai

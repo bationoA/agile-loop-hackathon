@@ -28,9 +28,9 @@ class ColorPrint:
 
 def get_matched_endpoint(api_spec: ReducedOpenAPISpec, plan: str):
     if "https" not in plan:
-        pattern = r"\b(GET|POST|PATCH|DELETE|PUT)\s+(/\S+)*"
+        pattern = r"\b(GET|POST|PATCH|DELETE|PUT|GENERATETEXT|GENERATEIMAGE)\s+(/\S+)*"
     else:
-        pattern = r"\b(GET|POST|PATCH|DELETE|PUT)\s+https?://\S+?(/\S+)"
+        pattern = r"\b(GET|POST|PATCH|DELETE|PUT|GENERATETEXT|GENERATEIMAGE)\s+https?://\S+?(/\S+)"
     matches = re.findall(pattern, plan)
     print(f"UTILS: PLAN 27: {plan}")
     print(f"UTILS: MATCHES 29: {matches}")

@@ -44,7 +44,7 @@
           "default"
         ],
         "summary": "Post a text content on a Facebook page",
-        "description": "When provided a text, make a new post with that text and on the facebook page. The context is only for text.",
+        "description": "This API is used to post a text only content on a Facebook page. The context is only for text.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -84,7 +84,8 @@
         "tags": [
           "default"
         ],
-        "summary": "post_photo_on_page",
+        "summary": "Post an image on a facebook page",
+        "description": "This API is used to post a content containing an image on a Facebook page. The context is only when an image is present in the post.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -118,7 +119,7 @@
           "default"
         ],
         "summary": "Generate text",
-        "description": "Generate a text based on user request",
+        "description": "This API is used to generate a text content based on a given query.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -144,6 +145,46 @@
                   "response": {
                     "value": {
                       "generated_text": "{{generated_text}}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/images/generations": {
+      "generateimage": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Generate an image and return its url",
+        "description": "This API is used to generate an image based on a given query. It then returns the url of that image",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "prompt": "Generate an image about climate change. It should contain a comparison of between healthy and bad environment."
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "url": "{{url}}"
                     }
                   }
                 }

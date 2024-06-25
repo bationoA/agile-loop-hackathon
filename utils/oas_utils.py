@@ -110,7 +110,7 @@ def reduce_openapi_spec(spec: dict, dereference: bool = True, only_required: boo
         (f"{operation_name.upper()} {route}", docs.get("description"), docs)
         for route, operation in spec["paths"].items()
         for operation_name, docs in operation.items()
-        if operation_name in ["get", "post", "patch", "delete", "put"]
+        if operation_name in ["get", "post", "patch", "delete", "put", "generatetext", "generateimage"]
     ]
 
     # endpoints = []

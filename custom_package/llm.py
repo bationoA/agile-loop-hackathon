@@ -10,6 +10,7 @@ class ChatModel:
     config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
     _scenarios_list = config["SCENARIOS_LIST"]
     os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
+    os.environ["OPENAI_MODEL"] = config["OPENAI_MODEL"]
     del config
 
     _url = "https://api.openai.com/v1/chat/completions"
@@ -18,9 +19,10 @@ class ChatModel:
         "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
     }
 
-    def __init__(self, user_content: str | list, prompt: str | None = None):
+    def __init__(self, user_content: str | list = "", prompt: str | None = None, model: str = os.environ["OPENAI_MODEL"]):
         self.user_content = user_content
         self.prompt = prompt
+        self.model = model
 
     @property
     def url(self) -> str:
@@ -34,17 +36,26 @@ class ChatModel:
     def context_message(self) -> list:
         return self.context_message
 
-    def get_response(self) -> Response | None:  #str | None:
+    def get_response(self) -> Response | None:  # str | None:
         if self.user_content == "":
             print("Error: Please provide `user_content`")
             return None
 
-        if self.prompt is not None:
-            self.user_content = self.prompt + self.user_content
+        # if self.prompt is not None:
+        #     self.user_content = self.prompt + self.user_content
 
         data = {
-            "model": "gpt-3.5-turbo",
-            "messages": self.user_content,
+            "model": self.model,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": self.prompt
+                },
+                {
+                    "role": "user",
+                    "content": self.user_content
+                }
+            ],
             "temperature": 0
         }
         response = requests.post(self.url, headers=self.headers, data=json.dumps(data))
@@ -106,9 +117,9 @@ class ScenarioSelector:
         scenarios_queries = []
         for scenario in self.scenarios_list:
             # Write the updated content back to the file
-            with open(os.path.join("icl_examples", "api_selector", f"{scenario}.txt"), 'r') as file:
+            with open(os.path.join("icl_examples", "api_selector", f"{scenario}_base.txt"), 'r') as file:
                 lines = file.readlines()
-
+            no_print = True
             for line in lines:
                 if "User query:" in line:
                     query = line.replace("User query:", "")
@@ -132,7 +143,7 @@ class ScenarioSelector:
                 {"role": "assistant", "content": f'["{scenario}"]'},
             ]
             examples += example
-
+        print(f"examples: {examples}")
         return examples
 
     def get_response(self) -> str | None:
