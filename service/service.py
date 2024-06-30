@@ -3,18 +3,18 @@ import base64
 import requests
 
 from custom_package import include_board_id_in_query
+from custom_package.llm import ScenarioSelector
 from helper import *
 import mysql.connector
 import random
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
 
 logger = logging.getLogger()
 
 
-def main():
+def run(query: str, scenario: str):
     config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
     os.environ["OPENAI_MODEL"] = config["OPENAI_MODEL"]  # TODO: We added this line
     os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
@@ -25,10 +25,14 @@ def main():
     )
     logger.setLevel(logging.INFO)
 
+    # scenario_selector = ScenarioSelector(user_content=query)
+    #
+    # scenario = scenario_selector.get_response()
+
     # scenario = input(
     #     "Please select a scenario (facebook/trello/jira/salesforce): "
     # )
-    scenario = "clockify"
+    # scenario = "clockify"
 
     scenario = scenario.lower()
     api_spec, headers = None, None
@@ -49,9 +53,9 @@ def main():
     user_id = 1
     # user_id = int(input("Enter the user id: "))
 
-    query = input(
-        "Please input an instruction (Press ENTER to use the example instruction): "
-    )
+    # query = input(
+    #     "Please input an instruction (Press ENTER to use the example instruction): "
+    # )
 
     if scenario == "tmdb":
         os.environ["TMDB_ACCESS_TOKEN"] = config["tmdb_access_token"]
@@ -387,7 +391,45 @@ def main():
             )
 
         # ----------- END Clockify scenario ---------------
+    elif scenario == "todoist":
+        if user_id is not None:
+            try:
+                ser_qu = f"SELECT * FROM todoist_credentials WHERE user_id = {user_id};"
+                cursor.execute(ser_qu)
+                res = cursor.fetchone()
+                access_token = res[1]
 
+                os.environ["TODOIST_ACCESS_TOKEN"] = "Bearer" + access_token
+            except:
+                print("Key is not present in the database")
+                return ""
+
+            replace_api_credentials_in_json(
+                # ## to replace all the key and token variables in the specs file with real values
+                scenario=scenario,
+                actual_token=os.environ["TODOIST_ACCESS_TOKEN"]
+            )
+
+            api_spec, headers = process_spec_file(
+                # to make the specs file minfy or smaller for better processing
+                file_path=f"specs/{scenario}_oas.json",
+                token=os.environ["TODOIST_ACCESS_TOKEN"]
+            )
+
+            query_example = "Create return my facebook user id"
+
+            replace_api_credentials(
+                model="api_selector",
+                scenario=scenario,
+                actual_token=os.environ["TODOIST_ACCESS_TOKEN"]
+            )
+            replace_api_credentials(
+                model="planner",
+                scenario=scenario,
+                actual_token=os.environ["TODOIST_ACCESS_TOKEN"]
+            )
+
+            # ----------- END todoist scenario ---------------
         # TODO -------------- WE FINISHED HERE ----------------------------------
     else:
         raise ValueError(f"Unsupported scenario: {scenario}")
@@ -420,9 +462,10 @@ def main():
     api_llm.our_user_query = query
 
     start_time = time.time()
-    api_llm.run(query)
-    logger.info(f"Execution Time: {time.time() - start_time}")
+    result = api_llm.run(query)
+    # logger.info(f"Execution Time: {time.time() - start_time}")
+
+    return result
 
 
-if __name__ == "__main__":
-    main()
+

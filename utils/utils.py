@@ -75,7 +75,7 @@ def get_matched_endpoint(api_spec: ReducedOpenAPISpec, plan: str):
     print(matched_endpoints)
     print("\n\n")
 
-    return matched_endpoints
+    return [matched_endpoints[0]]
 
 
 def simplify_json(raw_json: dict):

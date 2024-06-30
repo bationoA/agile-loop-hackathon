@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: Options title
+  description: Description from options
+  version: 6.0.7-beta
+  termsOfService: http://tos.myweb.com
+servers:
+  - url: https://api.todoist.com
+paths:
+  /rest/v2/projects:
+    get:
+      tags:
+        - default
+      summary: Get a user's projects
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: Adding a new project
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Hiking
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /rest/v2/tasks:
+    post:
+      tags:
+        - default
+      summary: Adding a new task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                content: Buy GPUs
+                project_id: '2335467740'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /rest/v2/tasks/8162765526:
+    post:
+      tags:
+        - default
+      summary: Updating a task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                due_string: tomorrow
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /rest/v2/tasks/8162765526/close:
+    post:
+      tags:
+        - default
+      summary: Completing a task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ''
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /rest/v2/projects/2335467740:
+    delete:
+      tags:
+        - default
+      summary: Deleting a project
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

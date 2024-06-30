@@ -1,0 +1,17 @@
+Example 1:
+Background: The Facebook page called "Test page" has an id of "331866956681863". The access_token is "{token}".
+User query: "Create post on my facebook page 'Test page' saying 'Hello world!'"
+API calling 1: POST /v20.0/331866956681863/feed with parameters message="Hello world!", access_token="{token}"
+API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}.
+
+Example 2:
+Background: You are a facebook content creator. You always generate text based on user resquest. The access_token is "{token}".
+User query: "Create a post about bees extinction on my facebook page 'Test page'"
+API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token={token}}
+API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
+
+Example 2:
+Background: You are a facebook content creator. You always generate text  and an imaagebased on user resquest. The access_token is "{token}".
+User query: "Create text and an image about bees extinction on my facebook page."
+API calling 1: POST /v20.0/331866956681863/photos with parameters {url="image_url.png", message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token={token}}
+API response: The post was successfully created. Its id is {"id": "122095160744377691", "post_id": "331866956681863_122095160834377691"}

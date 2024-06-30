@@ -50,6 +50,12 @@ def process_spec_file(file_path: str = None, token: str = None, key: str = None,
             "access_token": token
         }
         return api_spec, params
+
+    if "clockify" in file_path:
+        params = {
+            "x-api-key": token
+        }
+        return api_spec, params
     # TODO -------------- WE FINISHED HERE ----------------------------------
 
     if "spotify" in file_path:
@@ -101,16 +107,16 @@ def replace_api_credentials(model, scenario, actual_key=None, actual_token=None)
 
     # Replace placeholders with actual key and token
     if actual_key is not None:
-        updated_content = [line.replace(r"{key}", actual_key) for line in content]
+        content = [line.replace(r"{key}", actual_key) for line in content]
 
     if actual_token is not None:
-        updated_content = [line.replace(r"{token}", actual_token) for line in content]
+        content = [line.replace(r"{token}", actual_token) for line in content]
 
-    print(f"--->>> {scenario} ---- updated_content: {updated_content}")
+    print(f"--->>> {scenario} ---- updated_content: {content}")
 
     # Write the updated content back to the file
     with open(f"icl_examples/{model}/{scenario}.txt", 'w') as file:
-        file.writelines(updated_content)
+        file.writelines(content)
 
 
 def replace_api_credentials_in_json(scenario, actual_key=None, actual_token=None):

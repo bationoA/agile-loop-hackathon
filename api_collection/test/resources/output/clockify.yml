@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  title: Options title
+  description: Description from options
+  version: 6.0.7-beta
+  termsOfService: http://tos.myweb.com
+servers:
+  - url: https://api.clockify.me
+paths:
+  /api/v1/user:
+    get:
+      tags:
+        - default
+      summary: Get currently logged-in user's info
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspaces:
+    get:
+      tags:
+        - default
+      summary: Get all my workspaces
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspaces/667eeaee004df9127d441c4c/clients:
+    post:
+      tags:
+        - default
+      summary: Add a new client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                address: Ground Floor, ABC Bldg., Palo Alto, California, USA 94020
+                email: clientx@example.com
+                name: Client X2
+                note: This is a sample note for the client.
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - default
+      summary: Find clients on workspace
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspaces/667eeaee004df9127d441c4c/projects:
+    post:
+      tags:
+        - default
+      summary: Add a new project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Software Development
+                note: This is a sample note for the project.
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspaces/667eeaee004df9127d441c4c/users:
+    get:
+      tags:
+        - default
+      summary: Find all users on workspace
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspaces/667eeaee004df9127d441c4c/projects/667fa51e563ae543e8aab01c/tasks:
+    post:
+      tags:
+        - default
+      summary: Add a new task on project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: 57a687e29ae1f428e7ebe107
+                name: Bugfixing
+                assigneeIds:
+                  - 667fb3769fdaf225b168ad38
+                budgetEstimate: 10000
+                status: ACTIVE
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspaces/667eeaee004df9127d441c4c/projects/667fa51e563ae543e8aab01c:
+    put:
+      tags:
+        - default
+      summary: Update project on workspace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                clientId: 667fa0dec60cea43ff9e00c8
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

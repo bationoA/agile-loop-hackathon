@@ -105,6 +105,9 @@ def reduce_openapi_spec(spec: dict, dereference: bool = True, only_required: boo
     I was hoping https://openapi.tools/ would have some useful bits
     to this end, but doesn't seem so.
     """
+
+    # print(f"spec['paths'].items(): {spec['paths'].items()}")
+
     # 1. Consider only get, post, patch, delete endpoints.
     endpoints = [
         (f"{operation_name.upper()} {route}", docs.get("description"), docs)
@@ -112,6 +115,10 @@ def reduce_openapi_spec(spec: dict, dereference: bool = True, only_required: boo
         for operation_name, docs in operation.items()
         if operation_name in ["get", "post", "patch", "delete", "put"]
     ]
+
+    # print(f"NEW endpoints: {endpoints}")
+
+    # endpoints =
 
     # endpoints = []
     # for route, operation in spec["paths"].items():
@@ -170,6 +177,7 @@ def reduce_openapi_spec(spec: dict, dereference: bool = True, only_required: boo
         (name, description, reduce_endpoint_docs(docs))
         for name, description, docs in endpoints
     ]
+
     return ReducedOpenAPISpec(
         servers=spec["servers"],
         description=spec["info"].get("description", ""),

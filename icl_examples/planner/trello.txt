@@ -1,7 +1,15 @@
+Example 0:
+User query: Create a board called "Gambira".
+Plan step 1: Create a board called "Gambira".
+API calling 1: POST /1/boards/ with parameters {name: "Gambira", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: A new board with the name "Gambira" has been created successfully. The ID of the board is "658d2272d02bb8b7918d140f".
+Thought: I have finished the execution plan and created a board named "Gambira".
+Final Answer: I have created a board named "Gambira".
+
 Example 1:
 User query: Create a new board named "AI Hub".
-Plan step 1: Create a board named "AI Hub".
-API calling 1: POST /1/boards/ with parameters {name: "AI Hub", key: "7dd80cbf8d24feea9361ad46d8670c5f", token: "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"}.
+Plan step 1: Create a new board named "AI Hub".
+API calling 1: POST /1/boards/ with parameters {name: "AI Hub", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
 API response: A new board with the name "AI Hub" has been created successfully. The ID of the board is "658d2272d02bb8b7918d140f".
 Thought: I have finished the execution plan and created a board named "AI Hub".
 Final Answer: I have created a board named "AI Hub".
@@ -9,7 +17,7 @@ Final Answer: I have created a board named "AI Hub".
 Example 2:
 User query: Create a label "Completed" in blue color for the board with id "658d2272d02bb8b7918d140f".
 Plan step 1: Create a label "Completed" in blue color for the board with id "658d2272d02bb8b7918d140f".
-API calling 1: POST /1/boards/658d2272d02bb8b7918d140f/labels with parameters {name: "Completed", color: "blue", key: "7dd80cbf8d24feea9361ad46d8670c5f", token: "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"}.
+API calling 1: POST /1/boards/658d2272d02bb8b7918d140f/labels with parameters {name: "Completed", color: "blue", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
 API response: The label "Completed" with color "blue" has been added to the board "658d2272d02bb8b7918d140f" successfully. 
 Thought: I have finished the execution plan and added a label to the board.
 Final Answer: I have added a label "Completed" to the board with id "658d2272d02bb8b7918d140f".
@@ -17,7 +25,42 @@ Final Answer: I have added a label "Completed" to the board with id "658d2272d02
 Example 3:
 User query: Delete the board with id "658d2272d02bb8b7918d140f".
 Plan step 1: Delete the board with id "658d2272d02bb8b7918d140f".
-API calling 1: DELETE /1/boards/658d2272d02bb8b7918d140f with parameters {key: "7dd80cbf8d24feea9361ad46d8670c5f", token: "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"}.
+API calling 1: DELETE /1/boards/658d2272d02bb8b7918d140f with parameters {key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
 API response: The board with id "658d2272d02bb8b7918d140f" has been deleted successfully. 
 Thought: I have finished the execution plan and deleted the board.
 Final Answer: I have deleted the board with id "658d2272d02bb8b7918d140f".
+
+Example 4:
+User query: Create a board named "Team 1", add a card name "Card 1" to the list "To Do", and send an invation to the email "agileloop@gmail.com".
+Plan step 1: Create a new board named "Team 1".
+API calling 1: POST /1/boards/ with parameters {name: "Team 1", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: A new board with the name "Team 1" has been created successfully. The ID of the board is "659d2202d02bb8b7918d140f".
+Plan step 2: Get the id of the list "To Do" from the board of id "659d2202d02bb8b7918d140f".
+API calling 2: GET /1/boards/659d2202d02bb8b7918d140f/lists with parameters {key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: The id of the list "To Do" is "5abbe4b7ddc1b351ef961414".
+Plan step 3: Create a card "Card 1" in the list with id "5abbe4b7ddc1b351ef961414".
+API calling 3: POST /1/cards with parameters {idList: "5abbe4b7ddc1b351ef961414", name="Card 1", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: The card "Card 1" has been added to the list "5abbe4b7ddc1b351ef961414" successfully.
+Plan step 4: Invite a member of email "agileloop@gmail.com" for the board with id "659d2202d02bb8b7918d140f".
+API calling 4: PUT /1/boards/659d2202d02bb8b7918d140f/members with parameters {email: "agileloop@gmail.com", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: An invitation to the board "659d2202d02bb8b7918d140f" has been sent to the email "agileloop@gmail.com" successfully.
+Thought: I have finished the execution plan.
+Final Answer: I have created the board name "Team 1", added a card "Card 1" to it, and sent an vitation to the board at the email.
+
+Example 5:
+User query: Create a board named "Coco Melon", add a List called "Simpson" in the board, add a card named "Carpenter" to the list, and send an invation to the email "unfold@hotmail.com".
+Plan step 1: Create a new board named "Coco Melon".
+API calling 1: POST /1/boards/ with parameters {name: "Coco Melon", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: A new board with the name "Coco Melon" has been created successfully. The ID of the board is "659d2202d02bb8b7918d140f".
+Plan step 2: Using the above board id, create a List named "Simpson" inside that board. Its id is "659d2202d02bb8b7918d140f".
+API calling 2: GET /1/boards/659d2202d02bb8b7918d140f/lists with parameters {key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: The list "Simpson" was successfully created. Its id is "5abbe4b7ddc1b351ef961414".
+Plan step 3: Use the id of the above created list and create a card "Carpenter" inside that list. Its id is "5abbe4b7ddc1b351ef961414".
+API calling 3: POST /1/cards with parameters {idList: "5abbe4b7ddc1b351ef961414", name="Carpenter", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: The card "Carpenter" has been added to the list "5abbe4b7ddc1b351ef961414" successfully.
+Plan step 4: Invite Member to Board via email "unfold@hotmail.com" for the board with id "659d2202d02bb8b7918d140f".
+API calling 4: PUT /1/boards/659d2202d02bb8b7918d140f/members with parameters {email: "unfold@hotmail.com", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: An invitation to the board "659d2202d02bb8b7918d140f" has been sent to the email "unfold@hotmail.com" successfully.
+Thought: I have finished the execution plan.
+Final Answer: I have created the board name "Coco Melon", added a card "Carpenter" to it, and sent an vitation to the board at the email.
+
