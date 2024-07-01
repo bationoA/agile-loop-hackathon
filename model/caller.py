@@ -276,11 +276,14 @@ class Caller(Chain):
 
         params, request_body = None, None
         if action == "GET":
+            print("------------------- GET --------------------------")
             if 'params' in data:
                 params = data.get("params")
                 response = self.requests_wrapper.get(data.get("url"), params=params)
             else:
                 response = self.requests_wrapper.get(data.get("url"))
+
+            print(f"response: {response}")
         elif action == "POST":
             params = data.get("params")
             request_body = data.get("data")
@@ -294,7 +297,9 @@ class Caller(Chain):
                     data["url"] = data["url"].replace("feed", "photos")
             print(f"scenario: {self.scenario}")
             print(f"query: {query}")
+            print(f"params: {params}")
             print(f"data: {data}")
+            print(f"request_body: {request_body}")
             response = self.requests_wrapper.post(data["url"], params=params, data=request_body)
             print(f"response type: {type(response)}")
             print(f"response: {response}")

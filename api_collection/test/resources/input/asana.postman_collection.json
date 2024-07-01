@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "b32710bf-b694-4bf0-8176-88fc99823e28",
+		"name": "sana",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36573975"
+	},
+	"item": [
+		{
+			"name": "create a team in a workspace",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"data\": {\r\n    \"name\": \"Team unfold\",\r\n    \"description\": \"This is team unfold\",\r\n    \"organization\": \"1207682594489056\"\r\n  }}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app.asana.com/api/1.0/teams",
+					"protocol": "https",
+					"host": [
+						"app",
+						"asana",
+						"com"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get workspaces",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 2/1207659450782126/1207670408761348:d537d0afe49dde301c70717d1d17bd9b",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://app.asana.com/api/1.0/workspaces",
+					"protocol": "https",
+					"host": [
+						"app",
+						"asana",
+						"com"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"workspaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create a project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"data\": {\r\n    \"name\": \"Project of Hackthon\",\r\n    \"team\": \"1207691525697942\",\r\n    \"workspace\": \"1207682594489056\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app.asana.com/api/1.0/projects",
+					"protocol": "https",
+					"host": [
+						"app",
+						"asana",
+						"com"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create a section in a project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"data\": {\r\n    \"name\": \"Unfold To Do\",\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app.asana.com/api/1.0/projects/1207691530686483/sections",
+					"protocol": "https",
+					"host": [
+						"app",
+						"asana",
+						"com"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"projects",
+						"1207691530686483",
+						"sections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add task to a project and assign it to a user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"data\": {\r\n    \"name\": \"BUILD THE FRONTEND\",\r\n    \"assignee\": \"1207682904149620\",\r\n    \"projects\": [\r\n      \"1207691530686483\"\r\n    ]\r\n  }\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app.asana.com/api/1.0/tasks",
+					"protocol": "https",
+					"host": [
+						"app",
+						"asana",
+						"com"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get the teams in a workspace",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://app.asana.com/api/1.0/workspaces/1207682594489056/teams",
+					"protocol": "https",
+					"host": [
+						"app",
+						"asana",
+						"com"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"workspaces",
+						"1207682594489056",
+						"teams"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

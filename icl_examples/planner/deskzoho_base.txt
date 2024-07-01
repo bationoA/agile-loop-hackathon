@@ -1,0 +1,49 @@
+Example 1:
+User query: Add a new customer called "Jack Daniel".
+Plan step 1: create a new contact named "Jack Daniel".
+API calling 1: POST /api/v1/contacts with parameters firstName= "Jack", lastName="Daniel"
+API response: A new contact was created with id "343245545657653".
+Thought: I have finished the execution plan and created a new customer named "Jack Daniel".
+Final Answer: I have added a new customer. The id is "343245545657653".
+
+Example 2:
+User query: Create a new ticket about "The shower needs reparation" for the customer with contact id "109037678687687324"
+Plan step 1: Create a new ticket for the contactId "109037678687687324" with the subject "The shower needs reparation"
+API calling 1: POST /api/v1/tickets with parameters {subject: "The shower needs reparation", contactId="109037678687687324", departmentId=1009214000000006907}.
+API response: A new ticket was created with id "109279836498307743".
+Thought: I have finished the execution plan and created a new ticket with the subejt "The shower needs reparation".
+Final Answer: I have create a ticket. Its id is "109279836498307743".
+
+
+Example 3:
+User query: Create an high priority task about "Refilling the gas" for the ticket of id "1079876236489876" for 9/11/20
+Plan step 1:Create a new task about "Refilling the gas" for the ticket id "1079876236489876" due on "09/11/2025". The priority is "high".
+API calling 1: POST /api/v1/tasks with parameters subject="Refilling the gas", ticketId="1079876236489876", dueDate="2025-11-09T17:00:00.000Z", priority="high", departmentId=1009214000000006907
+API response: A new task was created with id "1765397689783423".
+Thought: I have finished the execution plan and created a new tak with the subejt "Refilling the gas".
+Final Answer: I have create the task. Its id is "1765397689783423".
+
+
+Example 4:
+User query: Add a new customer called "Ali Ba" and create a ticket for him about "Request for account support"
+Plan step 1: create a new contact named "Ali Ba"
+API calling 1: POST /api/v1/contacts with parameters firstName= "Ali", lastName="Ba"
+API response 1: The new customer "Ali Ba" was created with id "1983887676438423"
+Plan step 2: Create a new ticket for the contactId "1983887676438423" with the subject "Request for account support"
+API calling 2: POST /api/v1/tickets with parameters {subject: "Request for account support", contactId="1983887676438423", departmentId=1009214000000006907}
+API response 2: The new ticket was created with id "173687693459766456"
+Final Answer: The new customer added is "Ali Ba" and ticket created is about "Request for account support".
+
+
+Example 5:
+User query: Add a new customer called "Moise Dabire", next create a ticket for him about "Request for a supplier", and create an high priority task for him about "Supply 400 kg of ciment" due on 27/9/2024.
+Plan step 1: create a new contact named "Moise Dabire".
+API calling 1: POST /api/v1/contacts with parameters firstName="Moise", lastName="Dabire"
+API response 1: The new customer created is "Moise Dabire" with contactId="1739879487548765".
+Plan step 2: Create a new ticket for the contactId="1739879487548765" with the subject "Request for a supplier"
+API calling 2: POST /api/v1/tickets with parameters {subject: "Request for a supplier", contactId="1739879487548765", departmentId=1009214000000006907}.
+API response 2: The new ticket created has ticketId="173687693459766456".
+Plan step 3:Create a new task about "Supply 400 kg of ciment" for the ticket ticketId="173687693459766456" due on "27/9/2024". The priority is "high".
+API calling 3: POST /api/v1/tasks with parameters subject="Supply 400 kg of ciment", ticketId="173687693459766456", dueDate="2025-11-09T17:00:00.000Z", priority="high", departmentId=1009214000000006907
+API response 3: A new task was created and its id is ticketId="105493457657213".
+Final Answer: The new customer added is "Moise Dabire", the ticket created is about "Request for a supplier", and the task created is "Supply 400 kg of ciment".

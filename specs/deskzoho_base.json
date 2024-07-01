@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Options title",
+    "description": "Description from options",
+    "version": "6.0.7-beta",
+    "termsOfService": "http://tos.myweb.com"
+  },
+  "servers": [
+    {
+      "url": "https://desk.zoho.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/tickets": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Create a ticket",
+        "description": "Create a ticket for a customer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "subject": "Unable to create an agent inside the sandbox",
+                  "departmentId": 1009214000000006900,
+                  "contactId": "1009214000000402001"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "header",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "856665475"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/contacts": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Added a customer",
+        "description": "Added or create a new customer or contact",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "firstName": "Jack",
+                  "lastName": "Baur"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "header",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "856665475"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"},
+                "examples": {
+                  "response": {
+                    "value": {"id": "{{id}}"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tasks": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Create task",
+        "description": "Create task for a ticket",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "subject": "Bug Fix #120",
+                  "departmentId": "1009214000000006907",
+                  "ticketId": "1009214000000403001",
+                  "dueDate": "2024-07-21T16:16:16.000Z",
+                  "priority": "High",
+                  "status": "In Progress"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "header",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "856665475"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

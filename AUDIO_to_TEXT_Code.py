@@ -38,9 +38,9 @@ def add_llm_text(text: str):
     text_box.config(state=tk.NORMAL)
     # Configure the tags for colored text
     text_spacing = 10
-    text_box.tag_config("colored2", background="gray", font=("Helvetica", 16), spacing1=text_spacing,
+    text_box.tag_config("colored2", background="#b9e8b9", font=("Helvetica", 16), spacing1=text_spacing,
                         spacing3=text_spacing)
-
+    # llm_message = text
     try:
         llm_message = run(query=text, scenario=os.environ['SCENARIO'])
 
@@ -72,10 +72,11 @@ def add_llm_text(text: str):
 
 
 def add_text(query: str):
-    if query != "Enter message...":
+    if query != "Enter message..." and os.getenv('SCENARIO', None) is not None:
         threading.Thread(target=add_user_text, args=(query,)).start()
 
         threading.Thread(target=add_llm_text, args=(query,)).start()
+
 
 def transcribe_audio(audio_file):
     # Initialize the recognizer
@@ -177,14 +178,17 @@ frames = []
 # frame.pack(fill=tk.X, pady=10)
 
 # Create a banner label
-banner = tk.Label(root, text="Team Unfold: Synapse-Copylot scenarios", font=("Helvetica", 12, "bold"), bg="#0A1727", fg="white")
+banner = tk.Label(root, text="Team Unfold: Synapse-Copylot scenarios", font=("Helvetica", 12, "bold"), bg="#0A1727",
+                  fg="white")
 banner.pack(fill=tk.X, pady=10)
+
 
 ##################################################################################################################################
 def on_select(event):
     selected_option = combobox.get()
     os.environ['SCENARIO'] = selected_option
     print(f"Selected option: {selected_option}")
+
 
 # Create a Combobox
 config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)

@@ -1,0 +1,35 @@
+Example 1: Create a team
+Background:  The team ID for this project is team_id = "1207691525697942", and the workspace ID is "1207682594489056".
+User query: create a new project named "project 1" to my workspace.
+API calling 1: POST /api/1.0/teams with parameters name= "Team backend", token="2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f"
+API response: New team "team 1" have been created with id "42845t9726tr43246".
+
+Example 2: Create a project
+Background:  The team ID for the project is team_id = "1207691525697942", and the workspace ID is "1207682594489056".
+User query: Create a new project named "project1".
+API calling 1: POST  /api/1.0/projects with parameters name="project1", team= "1207691525697942", workspace="1207682594489056", token="2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f"
+API response: The id of the project "project1" is "2738639259845".
+
+
+Example 3: Create a section in a project
+Background: your role is to add a new section to a project. the project id is project_id ="1207691530686483"
+User query: Create a section named "Section 1" in the project with project_id "1207691530686483".
+API calling 1: POST /api/1.0/projects/{{project_id}}/sections with parameters name= "Section 1", token= "2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f".
+API response: New section "Section 1" created and its id is "5f3d456f8a147a263458e8d5".
+
+
+Example 4: create a new task in a project and assigne it to a user
+Background: The project_id="1207691530686483" and assignee_id="1207682904149620".
+User query: Create a task named "task 1" in the project with project_id "1207691530686483" and assigne it to the user with user_id ="1207682904149620".
+API calling 1: POST  /api/1.0/tasks with parameters name= "Section 1", assignee="1207682904149620", projects= [1207682904149620], token="2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f".
+API response: New task "Task 1" created with id "667fb56249f99e07a721c7ea". 
+
+
+Example 5: Get team id by name
+Background: You always return the id of the team based on the name provided by the user.
+User query: Retrieve the ID of the team name "Couscous"
+API calling 1: GET  /api/1.0/workspaces/1207682594489056/teams with parameters token="2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f".
+API response: The team "Couscous" has an id of "87687634234557656534".
+
+
+

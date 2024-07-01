@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
+import yaml
 from langchain.callbacks.base import BaseCallbackManager
 from langchain.chains.base import Chain
 from langchain.callbacks.manager import CallbackManagerForChainRun
@@ -48,11 +49,9 @@ class ApiLLM(Chain):
             our_user_query: str = "",  # TODO: We added this
             **kwargs: Any,
     ) -> None:
-        if scenario not in [
-            "tmdb", "spotify", "stable", "calendar", "notion", "upclick",
-            "discord", "sheets", "trello", "jira", "salesforce", "facebook",
-            "clockify"
-        ]:
+        config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
+
+        if scenario not in config["SCENARIOS_LIST"]:
             raise ValueError(f"Invalid scenario {scenario}")
 
         planner = Planner(llm=llm, scenario=scenario)

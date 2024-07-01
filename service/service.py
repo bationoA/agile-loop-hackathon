@@ -2,7 +2,7 @@ import base64
 
 import requests
 
-from custom_package import include_board_id_in_query
+from custom_package import include_board_id_in_query, refresh_access_token
 from custom_package.llm import ScenarioSelector
 from helper import *
 import mysql.connector
@@ -377,8 +377,6 @@ def run(query: str, scenario: str):
 
             # print(f"api_spec-api_spec: {api_spec}")
 
-            query_example = "example query to be removed"
-
             replace_api_credentials(
                 model="api_selector",
                 scenario=scenario,
@@ -399,7 +397,7 @@ def run(query: str, scenario: str):
                 res = cursor.fetchone()
                 access_token = res[1]
 
-                os.environ["TODOIST_ACCESS_TOKEN"] = "Bearer" + access_token
+                os.environ["TODOIST_ACCESS_TOKEN"] = access_token
             except:
                 print("Key is not present in the database")
                 return ""
@@ -416,8 +414,6 @@ def run(query: str, scenario: str):
                 token=os.environ["TODOIST_ACCESS_TOKEN"]
             )
 
-            query_example = "Create return my facebook user id"
-
             replace_api_credentials(
                 model="api_selector",
                 scenario=scenario,
@@ -430,6 +426,91 @@ def run(query: str, scenario: str):
             )
 
             # ----------- END todoist scenario ---------------
+        # TODO -------------- WE FINISHED HERE ----------------------------------
+    elif scenario == "asana":
+        if user_id is not None:
+            try:
+                ser_qu = f"SELECT * FROM asana_credentials WHERE user_id = {user_id};"
+                cursor.execute(ser_qu)
+                res = cursor.fetchone()
+                access_token = res[1]
+
+                os.environ["ASANA_ACCESS_TOKEN"] = access_token
+            except:
+                print("Key is not present in the database")
+                return ""
+
+            replace_api_credentials_in_json(
+                # ## to replace all the key and token variables in the specs file with real values
+                scenario=scenario,
+                actual_token=os.environ["ASANA_ACCESS_TOKEN"]
+            )
+
+            api_spec, headers = process_spec_file(
+                # to make the specs file minfy or smaller for better processing
+                file_path=f"specs/{scenario}_oas.json",
+                token=os.environ["ASANA_ACCESS_TOKEN"]
+            )
+
+            replace_api_credentials(
+                model="api_selector",
+                scenario=scenario,
+                actual_token=os.environ["ASANA_ACCESS_TOKEN"]
+            )
+            replace_api_credentials(
+                model="planner",
+                scenario=scenario,
+                actual_token=os.environ["ASANA_ACCESS_TOKEN"]
+            )
+
+            # ----------- END asana scenario ---------------
+    elif scenario == "deskzoho":
+        if user_id is not None:
+            try:
+                ser_qu = f"SELECT * FROM deskzoho_credentials WHERE user_id = {user_id};"
+                cursor.execute(ser_qu)
+                res = cursor.fetchone()
+                client_id = res[1]
+                client_secret = res[2]
+                refresh_token = res[3]
+                scope = res[4]
+
+                # Refresh / get access token
+                access_token = refresh_access_token(client_id=client_id, client_secret=client_secret,
+                                                    refresh_token=refresh_token, scope=scope)
+
+                print(f"New access_token: {access_token}")
+
+                os.environ["DESKZOHO_ACCESS_TOKEN"] = access_token
+
+            except:
+                print("Key is not present in the database")
+                return ""
+
+            replace_api_credentials_in_json(
+                # ## to replace all the key and token variables in the specs file with real values
+                scenario=scenario,
+                actual_token=os.environ["DESKZOHO_ACCESS_TOKEN"]
+            )
+
+            api_spec, headers = process_spec_file(
+                # to make the specs file minfy or smaller for better processing
+                file_path=f"specs/{scenario}_oas.json",
+                token=os.environ["DESKZOHO_ACCESS_TOKEN"]
+            )
+
+            replace_api_credentials(
+                model="api_selector",
+                scenario=scenario,
+                actual_token=os.environ["DESKZOHO_ACCESS_TOKEN"]
+            )
+            replace_api_credentials(
+                model="planner",
+                scenario=scenario,
+                actual_token=os.environ["DESKZOHO_ACCESS_TOKEN"]
+            )
+
+            # ----------- END deskzoho scenario ---------------
         # TODO -------------- WE FINISHED HERE ----------------------------------
     else:
         raise ValueError(f"Unsupported scenario: {scenario}")
@@ -450,12 +531,9 @@ def run(query: str, scenario: str):
         simple_parser=False
     )
 
-    print(f"Example instruction: {query_example}")
     # query = input(
     #     "Please input an instruction (Press ENTER to use the example instruction): "
-    # )
-    if query == "":
-        query = query_example
+    # )\
 
     logger.info(f"Query: {query}")
 

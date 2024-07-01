@@ -42,6 +42,7 @@ API response: the response of API calling 1
 Instruction: Another model will evaluate whether the user query has been fulfilled. If the instruction contains "continue", then you should make another API call following this instruction.
 ... (this API calling n and API response can repeat N times, but most queries can be solved in 1-2 step)
 
+If the instruction contains "Go to next step", then do not return 'Final Answer', but you should make the API call following this instruction.
 
 {icl_examples}
 

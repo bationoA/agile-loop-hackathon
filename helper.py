@@ -56,6 +56,24 @@ def process_spec_file(file_path: str = None, token: str = None, key: str = None,
             "x-api-key": token
         }
         return api_spec, params
+
+    if "todoist" in file_path:
+        params = {
+            "Authorization": f"Bearer {token}"
+        }
+        return api_spec, params
+
+    if "asana" in file_path:
+        params = {
+            "Authorization": f"Bearer {token}"
+        }
+        return api_spec, params
+
+    if "zohodesk" in file_path:
+        headers = {
+            'Authorization': f'Zoho-oauthtoken {token}'
+        }
+        return api_spec, headers
     # TODO -------------- WE FINISHED HERE ----------------------------------
 
     if "spotify" in file_path:
