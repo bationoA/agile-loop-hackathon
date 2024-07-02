@@ -16,7 +16,7 @@ logger = logging.getLogger()
 
 def run(query: str, scenario: str):
     config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
-    os.environ["OPENAI_MODEL"] = config["OPENAI_MODEL"]  # TODO: We added this line
+    os.environ["OPENAI_MODEL"] = config["OPENAI_MODEL"]
     os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
 
     logging.basicConfig(
@@ -274,7 +274,6 @@ def run(query: str, scenario: str):
         )
         query_example = "Create a new folder with name 'abc_folder'"
 
-    # TODO -------------- WE STARTED HERE ----------------------------------
     elif scenario == "facebook":
         if user_id is not None:
             try:
@@ -426,7 +425,6 @@ def run(query: str, scenario: str):
             )
 
             # ----------- END todoist scenario ---------------
-        # TODO -------------- WE FINISHED HERE ----------------------------------
     elif scenario == "asana":
         if user_id is not None:
             try:
@@ -511,7 +509,6 @@ def run(query: str, scenario: str):
             )
 
             # ----------- END deskzoho scenario ---------------
-        # TODO -------------- WE FINISHED HERE ----------------------------------
     else:
         raise ValueError(f"Unsupported scenario: {scenario}")
 

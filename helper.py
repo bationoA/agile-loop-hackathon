@@ -44,7 +44,6 @@ def process_spec_file(file_path: str = None, token: str = None, key: str = None,
         }
         return api_spec, headers
 
-    # TODO -------------- WE STARTED HERE ----------------------------------
     if "facebook" in file_path:
         params = {
             "access_token": token
@@ -74,7 +73,6 @@ def process_spec_file(file_path: str = None, token: str = None, key: str = None,
             'Authorization': f'Zoho-oauthtoken {token}'
         }
         return api_spec, headers
-    # TODO -------------- WE FINISHED HERE ----------------------------------
 
     if "spotify" in file_path:
         scopes = list(raw_api_spec['components']['securitySchemes']
@@ -111,13 +109,9 @@ def populate_planner_icl_examples(scenario: str = None):
 
 
 def replace_api_credentials(model, scenario, actual_key=None, actual_token=None):
-
-    # TODO: ---------- We added from here
     # We have also set actual_key=None, actual_token=None in the function parameters
     if actual_key is None and actual_token is None:
         return
-
-    # TODO: ---------- our adds end here
 
     # Open the file and read the contents
     with open(f"icl_examples/{model}/{scenario}_base.txt", 'r') as file:
@@ -138,7 +132,14 @@ def replace_api_credentials(model, scenario, actual_key=None, actual_token=None)
 
 
 def replace_api_credentials_in_json(scenario, actual_key=None, actual_token=None):
-    # TODO: We modified this. Now actual_key or actual_token can be None, but not both
+    """
+    modified this. Now actual_key or actual_token can be None, but not both
+
+    :param scenario:
+    :param actual_key:
+    :param actual_token:
+    :return:
+    """
     if actual_key is None and actual_token is None:
         raise "Both actual_key and actual_token cannot be None."
 
@@ -147,7 +148,14 @@ def replace_api_credentials_in_json(scenario, actual_key=None, actual_token=None
         content = json.load(json_file)
 
     def replace_values(d, actual_key=None, actual_token=None):
-        # TODO: We modified this. Now actual_key or actual_token can be None, but not both
+        """
+        We modified this. Now actual_key or actual_token can be None, but not both.
+
+        :param d:
+        :param actual_key:
+        :param actual_token:
+        :return:
+        """
         if actual_key is None and actual_token is None:
             raise "Both actual_key and actual_token cannot be None."
 
@@ -155,7 +163,7 @@ def replace_api_credentials_in_json(scenario, actual_key=None, actual_token=None
             if isinstance(value, dict):
                 replace_values(value, actual_key, actual_token)
             elif isinstance(value, str):
-                # TODO: We edited this. Values are replaced if they are not None
+                # We edited this. Values are replaced if they are not None
                 # OLD: facebook_oas.jsond[key] = value.replace(r"{key}", actual_key).replace(r"{token}", actual_token)
                 if actual_key is not None:
                     d[key] = value.replace(r"{key}", actual_key)

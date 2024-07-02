@@ -46,7 +46,7 @@ class ApiLLM(Chain):
             parser_with_example: bool = False,
             simple_parser: bool = False,
             callback_manager: Optional[BaseCallbackManager] = None,
-            our_user_query: str = "",  # TODO: We added this
+            our_user_query: str = "",  # We added this
             **kwargs: Any,
     ) -> None:
         config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
