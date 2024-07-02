@@ -1,6 +1,14 @@
 # openai_api_key: "YOUR OPENAI KEY"
 OPENAI_MODEL: "gpt-3.5-turbo"
 
+SCENARIOS_LIST:
+  - trello
+  - facebook
+  - clockify
+  - asana
+  - todoist
+  - deskzoho
+
 
 openai_api_key: "sk-proj-BcRr3cZWfi7PNWx906FxT3BlbkFJ2JpmMjEiC9XFGQEa1uXC"
 

@@ -1,0 +1,289 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Options title",
+    "description": "Description from options",
+    "version": "6.0.7-beta",
+    "termsOfService": "http://tos.myweb.com"
+  },
+  "servers": [
+    {
+      "url": "https://api.clockify.me/api/v1"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Get currently logged-in user's info",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/workspaces": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Get all my workspaces",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/workspaces/667eeaee004df9127d441c4c/clients": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Find clients by name on workspace",
+        "description": "Get clients by filtering client results that matches with the string provided in their client name.",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Donald Lee"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/workspaces/667eeaee004df9127d441c4c/projects": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Get a project by name",
+        "description": "Get projects by filtering project results that matches with the string provided in their project name.",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Project A"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/workspaces/667eeaee004df9127d441c4c/users": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Find a user by name",
+        "description": "Get users by filtering user results that matches with the string provided in their name.",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/workspaces/667eeaee004df9127d441c4c/projects/{projectId}/tasks": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Add a new task on project and assign user",
+        "description": "Add a new task on project and assign user to the new task using the user ID",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "Bugfixing",
+                  "assigneeIds": [
+                    "667fb3769fdaf225b168ad38"
+                  ],
+                  "budgetEstimate": 10000,
+                  "status": "ACTIVE"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/workspaces/667eeaee004df9127d441c4c/projects/{projectId}": {
+      "put": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Associate a project with its client",
+        "description": "Associate a project with the actual client using the client ID.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "clientId": "667fa0dec60cea43ff9e00c8"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/workspaces/667eeaee004df9127d441c4c/projects/{projectId}/memberships": {
+      "put": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Add a user to a project",
+        "description": "Add a user to a project using the id of the user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "userIds": [
+                    "667fb3769fdaf225b168ad38"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

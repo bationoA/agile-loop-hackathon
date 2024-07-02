@@ -1,0 +1,18 @@
+Example 1: Add a new customer
+Background:  The organisation id is orgId = "856665475".
+User query: Add a new contact named "Marie Curie".
+API calling 1: POST /api/v1/contacts with parameters firstName= "marie", lastName="Curie"
+API response: The id of the customer "Marie Curie" id is "42845t9726tr43246".
+
+Example 2: Create a ticket
+Background: The organisation id is orgId="856665475" and department id is departmentId=1009214000000006907.
+User query: Create a new ticket for the contactId "1874398787497640989873" with the subject "The platform is not working"
+API calling 1: POST  /api/v1/tickets with parameters subject="The platform is not working", contactId="1874398787497640989873", departmentId=1009214000000006907
+API response: A new ticket has been created and its id is "12349670760438756080".
+
+Example 3: Create a taks for a ticket
+Background:  The organisation id is orgId="856665475" and department id is departmentId=1009214000000006907.
+User query: Create a new task about "Fix the bug 12" for the ticket id "1678087604876732657" due on "4/08/2024". The priority is "high".
+API calling 1: POST  /api/v1/tasks with parameters subject="Fix the bug 12", ticketId="1678087604876732657", dueDate="2024-08-04T17:00:00.000Z", priority="high", departmentId=1009214000000006907
+API response: A new task has been created and its id is "19876453568776543".
+

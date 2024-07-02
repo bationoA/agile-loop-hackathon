@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "5243f9fb-8fb4-4288-8351-66e943374954",
+		"name": "clockify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25011463"
+	},
+	"item": [
+		{
+			"name": "Get currently logged-in user's info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/user",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all my workspaces",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/workspaces",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"workspaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"address\": \"Ground Floor, ABC Bldg., Palo Alto, California, USA 94020\",\n\"email\": \"clientx@example.com\",\n\"name\": \"Client X2\",\n\"note\": \"This is a sample note for the client.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/workspaces/667eeaee004df9127d441c4c/clients",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"workspaces",
+						"667eeaee004df9127d441c4c",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find clients on workspace",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"Client X\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/workspaces/667eeaee004df9127d441c4c/clients",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"workspaces",
+						"667eeaee004df9127d441c4c",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"Software Development\",\n\"note\": \"This is a sample note for the project.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/workspaces/667eeaee004df9127d441c4c/projects",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"workspaces",
+						"667eeaee004df9127d441c4c",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find all users on workspace",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"Software Development\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/workspaces/667eeaee004df9127d441c4c/users",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"workspaces",
+						"667eeaee004df9127d441c4c",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new task on project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"57a687e29ae1f428e7ebe107\",\n    \"name\": \"Bugfixing\",\n    \"assigneeIds\": [\n        \"667fb3769fdaf225b168ad38\"\n        ],\n    \"budgetEstimate\": 10000,\n    \"status\": \"ACTIVE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/workspaces/667eeaee004df9127d441c4c/projects/667fa51e563ae543e8aab01c/tasks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"workspaces",
+						"667eeaee004df9127d441c4c",
+						"projects",
+						"667fa51e563ae543e8aab01c",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update project on workspace",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "ZmMwNTRiOWEtNTA2YS00NzRlLThmZmQtYWJjOWRlYjdhY2Rj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clientId\": \"667fa0dec60cea43ff9e00c8\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.clockify.me/api/v1/workspaces/667eeaee004df9127d441c4c/projects/667fa51e563ae543e8aab01c",
+					"protocol": "https",
+					"host": [
+						"api",
+						"clockify",
+						"me"
+					],
+					"path": [
+						"api",
+						"v1",
+						"workspaces",
+						"667eeaee004df9127d441c4c",
+						"projects",
+						"667fa51e563ae543e8aab01c"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

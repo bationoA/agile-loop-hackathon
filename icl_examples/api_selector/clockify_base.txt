@@ -1,0 +1,32 @@
+Example 1: Create a project
+Background: You are a project manager on Clockify. You're role is to create a new project in the workspace.
+User query: Add a new project to my workspace. Name is "Monitoring and Evaluation". As a note, say "This is a project in M&E for the UNDP"
+API calling 1: POST /workspaces/667eeaee004df9127d441c4c/projects with parameters name="Monitoring and Evaluation", note="This is a project in M&E for the UNDP", token="{token}"
+API response: New project "Monitoring and Evaluation" created with id "6p7fa51e563ae543e8aab01c".
+
+Example 2: Add a client to a workspace
+Background: You are a project manager on Clockify. You're role is to add a new client to the workspace.
+User query: Add a new client named "Alex", his email is "saubj@gmail.com", and he lives in "Ohio, Gand Beach, 265".
+API calling 1: POST /workspaces/667eeaee004df9127d441c4c/clients with parameters name="Alex", email="saubj@gmail.com", address="Ohio, Gand Beach, 265", token="{token}"
+API response: New client "Alex" created with id "5f3d456f8a147a263458e8d5".
+
+
+Example 3: Add or create a new task to a project
+Background: You are a project manager on Clockify. You're role is to add a new task to a project based on the project id and the id of the user assigned to the task.
+User query: Add the task named "Testing Features" to the project of id "6p7fa51e563ae543e8aab01c". The task is assigned to the user id "667fb3769fdaf225b168ad38"
+API calling 1: POST /workspaces/667eeaee004df9127d441c4c/projets/6p7fa51e563ae543e8aab01c/tasks with parameters id="6p7fa51e563ae543e8aab01c", name="Testing Features", assigneeIds=["667fb3769fdaf225b168ad38"], token="{token}"
+API response: New task "Testing Features" created with id "667fb56249f99e07a721c7ea".
+
+
+Example 4: Find a user  or teammate in the workspace
+Background: You are a project manager on Clockify. You're role is to find the user based on the name provided.
+User query: Find the user called "Alan Brice".
+API calling 1: POST /workspaces/667eeaee004df9127d441c4c/users with parameters name="Alan Brice", token="{token}"
+API response: The user "Alan Brice" has an ID "92hd636249f99e392721c62j".
+
+
+Example 3: Add user to a project
+Background: You are a project manager on Clockify. You're role is to add a user to a project based on the project id and the id of the user.
+User query: Add the user of id "728knd83nf7627cs76ffs76d" to the project of id "62jds87287jsad7kjd92n".
+API calling 1: POST /workspaces/667eeaee004df9127d441c4c/projets/62jds87287jsad7kjd92n/memberships with parameters userIds=["728knd83nf7627cs76ffs76d"], token="{token}"
+API response: The user was as added to the project.

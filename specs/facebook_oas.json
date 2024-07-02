@@ -12,39 +12,13 @@
     }
   ],
   "paths": {
-    "/v20.0/me/accounts": {
-      "get": {
-        "tags": [
-          "default"
-        ],
-        "summary": "my_pages",
-        "parameters": [
-          {
-            "name": "access_token",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "example": "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
-      }
-    },
     "/v20.0/331866956681863/feed": {
       "post": {
         "tags": [
           "default"
         ],
-        "summary": "post_on_page",
-        "description": "Create a new post on a facebook page.",
+        "summary": "Post a text only content on Facebook page",
+        "description": "Create a new post on a facebook page for text content only.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -84,7 +58,8 @@
         "tags": [
           "default"
         ],
-        "summary": "post_photo_on_page",
+        "summary": "Post a content containing both a text and an image",
+        "description": "Post a content containing both a text and an image as a unique post on a Facebook page",
         "requestBody": {
           "content": {
             "application/json": {

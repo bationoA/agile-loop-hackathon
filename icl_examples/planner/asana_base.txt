@@ -1,0 +1,30 @@
+Example 1:
+User query: Create a Team named "Team backend".
+Plan step 1: Create a Team named "Team backend".
+API calling 1: POST /api/1.0/teams with parameters {name: "Team backend", description: "This is team backend", organization: "1207682594489056" , token: "{token}" }.
+API response: I have successfully created a team with a name "Team backend". Its ID is "658d2272d02bb8b7918d140f".
+Thought: I have finished the execution plan and created a Team named "Team backend".
+Final Answer: I have created a Team named "Team backend".
+
+Example 2:
+User query: Create a team named "Cobra" and create a project named "Safari" for that team.
+Plan step 1: Create a Team named "Cobra".
+API calling 1: POST /api/1.0/teams with parameters with parameters {name: "Cobra", description: "This is team Cobra", organization: "1207682594489056" , token: "{token}" }.
+API response: The team "Cobra" has an id of "767587665346876234".
+Plan step 2: Create a new project named "Safari" with the team id "767587665346876234".
+API calling 2: POST /api/1.0/projects with parameters  "data": {name: "Safari", team: "767587665346876234", workspace: "1207682594489056", token: "{token}" }
+Plan step 2: The project named "Safari" was created. Its id is "876768323797234".
+Thought: I have finished the execution plan and created a project named "Safari"  for the team "Cobra".
+Final Answer: I have created a project named "Safari"  for the team "Cobra". The project id is "876768323797234"
+
+Example 3:
+User query: Create a new project named "Cleaning" and create a new section called "Hospital" inside the created project.
+Plan step 1: Create a new project named "Cleaning".
+API calling 1: POST /api/1.0/projects with parameters  "data": {name: "Cleaning", team: "1207691525697942", workspace: "1207682594489056", token: "{token}" }.
+API response 1: The project named "Safari" was created. Its id is "974983647687623654".
+Plan step 2: Create new section called "Hospital" in the project of id "974983647687623654".
+API calling 2: POST /api/1.0/projects/974983647687623654/sections with parameters name= "Hospital", token= "{token}".
+API response 2: New section "Hospital" created and its id is "6532hd5723d572fd547634".
+Thought: I have finished the execution plan by creating the project "Cleaning" withe a new section called "Hospital".
+Final Answer: I have created a project named "Cleaning" and added a section called "Hospital".
+

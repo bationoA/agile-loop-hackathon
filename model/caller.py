@@ -107,6 +107,8 @@ If the API calling "Input" contains "{{}}" in "example" or "data" of parameters,
 
 If the {api_plan} includes "{{}}", do not replace with the actual value. Keep it as it is. For example keep GET /calendar/v3/calendars/{{calendarId}}/events as it is. Use the same url in the output.
 
+Never make up your own API response. Always use a real API response.
+
 Begin!
 
 Background: {background}
@@ -274,25 +276,30 @@ class Caller(Chain):
 
         params, request_body = None, None
         if action == "GET":
+            print("------------------- GET --------------------------")
             if 'params' in data:
                 params = data.get("params")
                 response = self.requests_wrapper.get(data.get("url"), params=params)
             else:
                 response = self.requests_wrapper.get(data.get("url"))
+
+            print(f"response: {response}")
         elif action == "POST":
             params = data.get("params")
             request_body = data.get("data")
             # request_body['access_token'] = os.environ["FACEBOOK_ACCESS_TOKEN"]  # TODO: To make sure the correct token is used. This is to avoid error dur to LLM failing to set the token
             print("------------------- POST --------------------------")
             if self.scenario == "facebook":
-                if "create an image" in self.our_user_query.lower():
+                if ("create" in self.our_user_query.lower() or "generate" in self.our_user_query.lower() or "post" in self.our_user_query.lower()) and "an image" in self.our_user_query.lower():
                     image_url = Dalle3Model(user_content=request_body.get("message")).get_images_url()
                     request_body["url"] = image_url
 
                     data["url"] = data["url"].replace("feed", "photos")
             print(f"scenario: {self.scenario}")
             print(f"query: {query}")
+            print(f"params: {params}")
             print(f"data: {data}")
+            print(f"request_body: {request_body}")
             response = self.requests_wrapper.post(data["url"], params=params, data=request_body)
             print(f"response type: {type(response)}")
             print(f"response: {response}")

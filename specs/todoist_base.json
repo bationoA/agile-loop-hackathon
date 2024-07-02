@@ -1,0 +1,226 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Options title",
+    "description": "Description from options",
+    "version": "6.0.7-beta",
+    "termsOfService": "http://tos.myweb.com"
+  },
+  "servers": [
+    {
+      "url": "https://api.todoist.com"
+    }
+  ],
+  "paths": {
+    "/rest/v2/projects": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Get a user's projects",
+        "description": "Get the list of a user's projects together with their id and name",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Add or create a new project",
+        "description": " Create a new project inside the workspace. It returns the id of the new project.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Hiking"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/tasks": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Adding a new task",
+        "description": "Create a new task inside a project based on the project id. It returns the id of the new task.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "content": "Buy GPUs",
+                  "project_id": "2335467740"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/tasks/{task_id}": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Updating the due date of a task",
+        "description": "Update the due date of a task. It returns the id of the task.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "due_string": "tomorrow"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/tasks/{task_id}/close": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Completing a task",
+        "description": "Mark a task as complete and close it. It returns 204 status code.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": ""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/projects/{project_id}": {
+      "delete": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Deleting a project",
+        "description": "Deleting a project using the id of the project. It returns 204 status code.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 584d48fdb02a2186b7ed7455dca6d23332098ae7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

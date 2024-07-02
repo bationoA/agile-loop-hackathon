@@ -1,17 +1,38 @@
 Example 1:
-Background: No background
+Background: You are a Trello manager. You always a create a board and name it as the user says.
 User query: Create a new board named "Project A".
-API calling 1: POST /1/boards/ with parameters name="Project A", key="7dd80cbf8d24feea9361ad46d8670c5f", token="ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
-API response: New board "Project A" created with id "5f3d456f8a147a263458e8d5"
+API calling 1: POST /1/boards/ with parameters name="Project A", key="a0fdb2145bd29427c20ab8efa0526341", token="ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
+API response: New board "Project A" created with id "5f3d456f8a147a263458e8d5".
 
 Example 2:
-Background: The board "Project A" has an id of "5f3d456f8a147a263458e8d5"
-User query: Create a label named "In Progress" with color blue for the board "Project A".
-API calling 1: POST /1/boards/5f3d456f8a147a263458e8d5/labels with parameters name="In Progress", color="blue", key="7dd80cbf8d24feea9361ad46d8670c5f", token="ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
-API response: New label "In Progress" created with color "blue" for the board "Project A"
+Background: The board "Project Rat" has an id of "5p3d456f8a147a263458e8d5"
+User query: Create a label named "In Progress" with color blue for the board "Project Rat".
+API calling 1: POST /1/boards/5p3d456f8a147a263458e8d5/labels with parameters name="In Progress", color="blue", key="a0fdb2145bd29427c20ab8efa0526341", token="ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
+API response: New label "In Progress" created with color "blue" for the board "Project Rat".
 
 Example 3:
-Background: The board "Project A" has an id of "5f3d456f8a147a263458e8d5"
+Background: The board "Project Q" has an id of "5ood456f8a147a263458e8d5"
 User query: Update the name of board "Project A" to "Project X".
-API calling 1: PUT /1/boards/5f3d456f8a147a263458e8d5 with parameters name="Project X", key="7dd80cbf8d24feea9361ad46d8670c5f", token="ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
-API response: Board with id "5f3d456f8a147a263458e8d5" updated successfully. New name "Project X"
+API calling 1: PUT /1/boards/5ood456f8a147a263458e8d5 with parameters name="Project X", key="a0fdb2145bd29427c20ab8efa0526341", token="ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
+API response: Board with id "5ood456f8a147a263458e8d5" updated successfully. New name "Project X".
+
+Example 4:
+User query: Create a card "Suppended" in the list with id "599be4b7ddc1b351ef961414".
+API calling 1: POST /1/cards with parameters {idList: "599be4b7ddc1b351ef961414", name="Suppended", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: A new card was created successfully in the list. Its id is "5abbe4b7ddc1b351ef961414".
+
+Example 5:
+User query: Get the id of the List "Placalie" from the board of id "659d2202d02bb8b7918d140f"
+API calling 1: GET /1/boards/659d2202d02bb8b7918d140f/lists with parameters {key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}..
+API response: The id of the list "Placalie" from the board with id "659d2202d02bb8b7918d140f" is "500cc4b7ddc1b351ef961414".
+
+Example 6:
+User query: Send an invite to the member of email "agileloop@gmail.com" for the board with id "65912202d02bb8b7918d140f"
+API calling 1: PUT /1/boards/65912202d02bb8b7918d140f/members with parameters {email: "agileloop@gmail.com", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: An invite was successfully sent to the member of email "agileloop@gmail.com". The id if the invitation is "667550ede2d16ba4e4547053"
+
+
+Example 7:
+User query: Create a list called "Ginger" in the board with id "662202d02bb8b7918d140f"
+API calling 1: PUT /1/boards/662202d02bb8b7918d140f/lists with parameters {id="662202d02bb8b7918d140f", name="Ginger", key: "a0fdb2145bd29427c20ab8efa0526341", token: "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"}.
+API response: A List "Ginger" has been successfully created. its id is "87dehd62j8725738hd6ww3".

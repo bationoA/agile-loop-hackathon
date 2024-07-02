@@ -1,0 +1,255 @@
+openapi: 3.0.0
+info:
+  title: Options title
+  description: Description from options
+  version: 6.0.7-beta
+  termsOfService: http://tos.myweb.com
+servers:
+  - url: https://desk.zoho.com
+paths:
+  /api/v1/departments:
+    get:
+      tags:
+        - default
+      summary: Get departments list
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Zoho-oauthtoken
+            1000.6a6f1b00120b3821f358e3b2dcf41aff.52114dac018e4365c6173fdc3ad6805c
+        - name: orgId
+          in: header
+          schema:
+            type: integer
+          example: '856665475'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: ZGS
+            Date:
+              schema:
+                type: string
+                example: Sun, 30 Jun 2024 19:51:32 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json;charset=UTF-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '369'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Content-Disposition:
+              schema:
+                type: string
+                example: attachment;
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            Cache-Control:
+              schema:
+                type: string
+                example: private,no-cache,no-store,max-age=0,must-revalidate
+            Pragma:
+              schema:
+                type: string
+                example: no-cache
+            Expires:
+              schema:
+                type: string
+                example: Thu, 01 Jan 1970 00:00:00 GMT
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Content-Security-Policy:
+              schema:
+                type: string
+                example: >-
+                  default-src 'none' ;script-src 'none' ;report-uri
+                  https://logsapi.zoho.com/csplog?service=support
+            X-Rate-Limit-Remaining:
+              schema:
+                type: integer
+                example: '999991'
+            X-Rate-Limit-Reset:
+              schema:
+                type: integer
+                example: '40107'
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=63072000
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                data:
+                  - id: '1009214000000006907'
+                    name: AgenticSupport
+                    description: null
+                    createdTime: '2024-06-30T17:46:04.000Z'
+                    creatorId: '1009214000000139001'
+                    nameInCustomerPortal: AgenticSupport
+                    chatStatus: NOT_CREATED
+                    sanitizedName: agenticsupport
+                    isAssignToTeamEnabled: true
+                    isVisibleInCustomerPortal: true
+                    hasLogo: false
+                    isEnabled: true
+                    isDefault: true
+  /api/v1/organizations:
+    get:
+      tags:
+        - default
+      summary: get organisations
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Zoho-oauthtoken
+            1000.6a6f1b00120b3821f358e3b2dcf41aff.52114dac018e4365c6173fdc3ad6805c
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/tickets:
+    post:
+      tags:
+        - default
+      summary: Create a ticket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                subject: Unable to create an agent inside the sandbox
+                departmentId: 1009214000000006900
+                contactId: '1009214000000402001'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Zoho-oauthtoken
+            1000.6a6f1b00120b3821f358e3b2dcf41aff.52114dac018e4365c6173fdc3ad6805c
+        - name: orgId
+          in: header
+          schema:
+            type: integer
+          example: '856665475'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/contacts:
+    post:
+      tags:
+        - default
+      summary: Create Contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                firstName: Jack
+                lastName: Baur
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Zoho-oauthtoken
+            1000.6a6f1b00120b3821f358e3b2dcf41aff.52114dac018e4365c6173fdc3ad6805c
+        - name: orgId
+          in: header
+          schema:
+            type: integer
+          example: '856665475'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - default
+      summary: List contacts
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Zoho-oauthtoken
+            1000.6a6f1b00120b3821f358e3b2dcf41aff.52114dac018e4365c6173fdc3ad6805c
+        - name: orgId
+          in: header
+          schema:
+            type: integer
+          example: '856665475'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/tasks:
+    post:
+      tags:
+        - default
+      summary: Create task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                subject: 'Bug Fix #120'
+                departmentId: '1009214000000006907'
+                ticketId: '1009214000000403001'
+                dueDate: '2024-07-21T16:16:16.000Z'
+                priority: High
+                category: null
+                status: In Progress
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Zoho-oauthtoken
+            1000.6a6f1b00120b3821f358e3b2dcf41aff.52114dac018e4365c6173fdc3ad6805c
+        - name: orgId
+          in: header
+          schema:
+            type: integer
+          example: '856665475'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

@@ -1,17 +1,28 @@
 Example 1:
-Background: The access_token is "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti".
+Background: The access_token is "EAAzDsFohsWwBO9CXZCDhd3Bp6wCB1tb9ujv9BZAhLFcfrPeZCB1WNN86010uGJz2bmqS3iy88W8b5gzNng8Xkh8rdiZCRiievLD0vxZBYhVUBV12Xl0vdNeLF3oO11aseI1ZBRcM9mkOmyaoGRZBcZBr9ZBaTHyjmlxgOFC1C05wp6ZAOMEy9NeWmfhphSRLMtwpQ70MApHy2dlno0KTWULgOl7Usv".
 User query: "Create post on my facebook page 'Test page' saying 'Hello world!'"
 Plan step 1: Create a post on page "Test page"
-API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Hello world!", access_token=EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti}
+API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Hello world!", access_token=EAAzDsFohsWwBO9CXZCDhd3Bp6wCB1tb9ujv9BZAhLFcfrPeZCB1WNN86010uGJz2bmqS3iy88W8b5gzNng8Xkh8rdiZCRiievLD0vxZBYhVUBV12Xl0vdNeLF3oO11aseI1ZBRcM9mkOmyaoGRZBcZBr9ZBaTHyjmlxgOFC1C05wp6ZAOMEy9NeWmfhphSRLMtwpQ70MApHy2dlno0KTWULgOl7Usv}
 API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
 Thought: I have finished the execution plan and created a post on the page "Test page".
 Final Answer: I have created a post on the page "Test page".
 
 Example 2:
-Background: You are a facebook content creator. You always generate 1 paragraph of text based on user resquest. The access_token is "EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti".
-User query: "Create post a post about bees extinction on my facebook page 'Test page'"
+Background: You are a facebook content creator. You always generate 1 paragraph of text based on user resquest. The access_token is "EAAzDsFohsWwBO9CXZCDhd3Bp6wCB1tb9ujv9BZAhLFcfrPeZCB1WNN86010uGJz2bmqS3iy88W8b5gzNng8Xkh8rdiZCRiievLD0vxZBYhVUBV12Xl0vdNeLF3oO11aseI1ZBRcM9mkOmyaoGRZBcZBr9ZBaTHyjmlxgOFC1C05wp6ZAOMEy9NeWmfhphSRLMtwpQ70MApHy2dlno0KTWULgOl7Usv".
+User query: "Create a post about bees extinction on my facebook page 'Test page'"
 Plan step 1: Create a facebook post about bees extinction on page "Test page"
-API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token=EAAzDsFohsWwBOwLWghSYLRAZAGEdpNg7hY8nQRk31YHTlrNCfnsANY6zZBSbZCzLzt6yR0mfyVVek2smalgUKXDBzXjvrbkxpw2XmGg2e1Qh3xTYB0xYsZB5sL9gZCMpeULjv3V20tC1EGHoJAZAQqrpuPZCIGW5PDZAM1BDaEFZCDvT1gsKE1ZB5b7bGpVJsSG4Ti}
+API calling 1: POST /v20.0/331866956681863/feed with parameters {message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token=EAAzDsFohsWwBO9CXZCDhd3Bp6wCB1tb9ujv9BZAhLFcfrPeZCB1WNN86010uGJz2bmqS3iy88W8b5gzNng8Xkh8rdiZCRiievLD0vxZBYhVUBV12Xl0vdNeLF3oO11aseI1ZBRcM9mkOmyaoGRZBcZBr9ZBaTHyjmlxgOFC1C05wp6ZAOMEy9NeWmfhphSRLMtwpQ70MApHy2dlno0KTWULgOl7Usv}
 API response: our post was successfully created. Its id is {id="331866956681863_122095102760377691"}
 Thought: I have finished the execution plan and created a post about bees extinction on the page "Test page".
 Final Answer: I have created a post about bees extinction on the page "Test page".
+
+
+Example 3:
+Background: You are a facebook content creator. You always generate 1 paragraph of text togheter with an image based on user resquest. The access_token is "EAAzDsFohsWwBO9CXZCDhd3Bp6wCB1tb9ujv9BZAhLFcfrPeZCB1WNN86010uGJz2bmqS3iy88W8b5gzNng8Xkh8rdiZCRiievLD0vxZBYhVUBV12Xl0vdNeLF3oO11aseI1ZBRcM9mkOmyaoGRZBcZBr9ZBaTHyjmlxgOFC1C05wp6ZAOMEy9NeWmfhphSRLMtwpQ70MApHy2dlno0KTWULgOl7Usv".
+User query: "Create a post and an image about bees extinction on my facebook page."
+Plan step 1: Create a facebook post and an image about bees extinction on my page.
+API calling 1: POST /v20.0/331866956681863/photos with parameters {url="image_url.png", message="Bees are at risk of extinction largely due to human activities: large-scale changes in land use, industrialised agricultural practices like monocultures, and the detrimental use of pesticides", access_token=EAAzDsFohsWwBO9CXZCDhd3Bp6wCB1tb9ujv9BZAhLFcfrPeZCB1WNN86010uGJz2bmqS3iy88W8b5gzNng8Xkh8rdiZCRiievLD0vxZBYhVUBV12Xl0vdNeLF3oO11aseI1ZBRcM9mkOmyaoGRZBcZBr9ZBaTHyjmlxgOFC1C05wp6ZAOMEy9NeWmfhphSRLMtwpQ70MApHy2dlno0KTWULgOl7Usv}
+API response: The post was successfully created. Its id is {"id": "122095160744377691", "post_id": "331866956681863_122095160834377691"}
+Thought: I have finished the execution plan and created a post about bees extinction on the page.
+Final Answer: I have created a post about bees extinction on the Facebook page.
+

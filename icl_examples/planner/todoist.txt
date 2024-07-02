@@ -1,0 +1,27 @@
+Example 1:
+User query: Create a new project in called "Dropshipping".
+Plan step 1: Create a project called "Dropshipping".
+API calling 1: POST /rest/v2/projects with parameters name="Dropshipping", token="584d48fdb02a2186b7ed7455dca6d23332098ae7"
+API response: New project "Dropshipping" created with id "567935432543".
+Thought: I have finished the execution plan and created a project named "Dropshipping".
+Final Answer: I have created a project named "Dropshipping".
+
+Example 2:
+User query: Create a new project in called "Alice's Birthday" and Add a task "Buy cake".
+Plan step 1: Create a project called "Alice's Birthday".
+API calling 1: POST /rest/v2/projects with parameters name="Alice's Birthday", token="584d48fdb02a2186b7ed7455dca6d23332098ae7"
+API response 1: New project "Alice's Birthday" created with id "764573981r32".
+Plan step 2: Add a new task "Buy cake" to the project of id "764573981r32".
+API calling 2: POST /rest/v2/tasks with parameters content="Buy cake", project_id="764573981r32", token="584d48fdb02a2186b7ed7455dca6d23332098ae7".
+API response 1: The task "Buy cake" created with id "9898478326634".
+Thought: I have finished the execution plan and created the project "Alice's Birthday" and added the task "Buy cake".
+Final Answer: I have created a project named "Alice's Birthday" and added a task "Buy cake".
+
+Example 3:
+User query: Update the due date of the task of id "987673678434762".
+Plan step 1: Update the due date of the task of id "987673678434762" to "in 3 weeks".
+API calling 1: POST /rest/v2/tasks/96546342873433 with parameters due_string="in 3 weeks", token="584d48fdb02a2186b7ed7455dca6d23332098ae7"
+API response 1: The due date of the task of id "987673678434762" was successfully updated.
+Thought: I have finished the execution plan and set the task "987673678434762" to "in 3 weeks".
+Final Answer: I have the task of id "987673678434762" to "in 3 weeks".
+

@@ -14,7 +14,7 @@
   "components": {
     "securitySchemes": {
       "bearerAuth": {
-        "type": "http",
+        "type": "https",
         "scheme": "bearer"
       }
     }
@@ -50,7 +50,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -58,7 +58,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -95,7 +95,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -103,7 +103,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           },
           {
@@ -242,7 +242,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -250,7 +250,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           },
           {
@@ -288,7 +288,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -296,7 +296,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           },
           {
@@ -333,12 +333,12 @@
       }
     },
     "/1/boards/{id}/lists": {
-      "post": {
+      "get": {
         "tags": [
-          "Boards"
+          "Lists"
         ],
-        "summary": "Create a List on a Board",
-        "description": "Create a new List on a Board.",
+        "summary": "Get Lists on a Board",
+        "description": "Get the list of Lists existing in a Board",
         "requestBody": {
           "content": {}
         },
@@ -349,28 +349,21 @@
         ],
         "parameters": [
           {
-            "name": "Accept",
-            "in": "header",
+            "name": "id",
+            "in": "path",
             "schema": {
               "type": "string"
             },
-            "example": "application/json"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "The name of the list to be created. 1 to 16384 characters long.",
-            "example": "{{name}}"
+            "required": true,
+            "description": "The ID of the board containing the Lists",
+            "example": "{{id}}"
           },
           {
             "name": "key",
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -378,70 +371,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Boards"
-        ],
-        "summary": "Get Lists on a Board",
-        "description": "Get the Lists on a Board",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            },
-            "example": "application/json"
-          },
-          {
-            "name": "key",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
-            }
-          },
-          {
-            "name": "token",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
           }
         ],
         "responses": {
@@ -472,7 +403,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -480,7 +411,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           },
           {
@@ -575,7 +506,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -583,7 +514,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           },
           {
@@ -640,11 +571,20 @@
             "example": "{{idList}}"
           },
           {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the card to be created",
+            "example": "{{name}}"
+          },
+          {
             "name": "key",
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -652,7 +592,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -700,7 +640,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -708,7 +648,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -757,7 +697,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -765,7 +705,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -803,7 +743,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -811,7 +751,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -873,7 +813,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -881,7 +821,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -926,7 +866,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -934,7 +874,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -986,7 +926,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -994,7 +934,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1064,7 +1004,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1072,7 +1012,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1122,7 +1062,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1130,7 +1070,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1170,7 +1110,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1178,7 +1118,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1219,7 +1159,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1227,7 +1167,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1280,7 +1220,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1288,7 +1228,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1338,7 +1278,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1346,7 +1286,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1400,7 +1340,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1408,7 +1348,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1463,7 +1403,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1471,7 +1411,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1513,7 +1453,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1521,7 +1461,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],
@@ -1563,7 +1503,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "7dd80cbf8d24feea9361ad46d8670c5f"
+              "example": "{key}"
             }
           },
           {
@@ -1571,7 +1511,60 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "ATTAd3119c767e887ffb7465be1aa2d7aed48b596018901c35b894617860ddba08232BFA843F"
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/1/boards/{id}/members": {
+      "put": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Invite Member to Board via email",
+        "description": "Invite a Member to a Board via their email address.",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "email": "{email}",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The email address of the recipient of the invitation.",
+            "example": "{{email}}"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "{key}"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "ATTAe724e424155558ac4f810180dd791e92e72deb668e9fcd6aad853def9f2a6c3f6658E43C"
             }
           }
         ],

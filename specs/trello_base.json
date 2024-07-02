@@ -605,6 +605,15 @@
             "example": "{{idList}}"
           },
           {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the card to be created",
+            "example": "{{name}}"
+          },
+          {
             "name": "key",
             "in": "query",
             "schema": {
@@ -1491,6 +1500,108 @@
             "required": true,
             "description": "The ID of the list",
             "example": "{{id}}"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "{key}"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "{token}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/1/boards/{id}/lists": {
+      "get": {
+        "tags": ["Lists"],
+        "summary": "Get Lists on a Board",
+        "description": "Get the list of Lists existing in a Board",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The ID of the board containing the Lists",
+            "example": "{{id}}"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "{key}"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "{token}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/1/boards/{id}/members": {
+      "put": {
+        "tags": ["Members"],
+        "summary": "Invite Member to Board via email",
+        "description": "Invite a Member to a Board via their email address.",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "email": "{email}",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The email address of the recipient of the invitation.",
+            "example": "{{email}}"
           },
           {
             "name": "key",

@@ -1,0 +1,47 @@
+Example 1:
+User query: Create a new project in called "Dropshipping". it is about "Buying from Ali Express and Selling in the US"
+Plan step 1: Create a board called "Gambira".
+API calling 1: POST /workspaces/667eeaee004df9127d441c4c/projects with parameters name="Dropshipping", note="Buy from Ali Express and Selling in the US", token="{token}"
+API response: New project "Dropshipping" created with id "6nsd2202d02gb8b7918d182r".
+Thought: I have finished the execution plan and created a project named "Dropshipping".
+Final Answer: I have created a project named "Dropshipping".
+
+Example 2:
+User query: Add a client called John, he lives at 230 Place de la Fontaine, Paris, France. His email address is shbs.eth@hotmail.fr.
+Plan step 1: Add a new client named "John".
+API calling 1: POST /workspaces/667eeaee004df9127d441c4c/clients with parameters {name: "John", email: "shbs.eth@hotmail.fr", address: "230 Place de la Fontaine, Paris, France", token="{token}"}.
+API response: New client "John" created with id "658d2272d02bb8b7918d140f".
+Thought: I have finished the execution plan and added a client named "John".
+Final Answer: I have added a client named "John".
+
+
+Example 3:
+User query: Add Jack Limme to the project "Poetry".
+Plan step 1: Find the id the project named "Poetry".
+API calling 1: GET /workspaces/667eeaee004df9127d441c4c/projects with parameters {name: "Poetry", token="{token}"}.
+API response 1: ID of the project "Poetry" is "888hs6763ik6ijcd872u". Now I must get the id of the user "Alice Baur"
+Plan step 2: Find the id of the user "Jack Limme".
+API calling 2: GET /workspaces/667eeaee004df9127d441c4c/users with parameters {name: "Jack Limme", token="{token}"}.
+API response 2: ID of the user "Jack Limme" is "78hjhew732kjed7823798j".
+Plan step 3: Add the user of id "78hjhew732kjed7823798j" to the project of id "888hs6763ik6ijcd872u".
+API calling 3: POST /workspaces/667eeaee004df9127d441c4c/projets/72hhs6529dh68b7918d140f/memberships with parameters userIds=["78hjhew732kjed7823798j"], token="{token}"
+API response: The user was added to the project. The id of the operation is "667fa51e563ae543e8aab01c"
+Thought: I have finished the execution plan and added "Jack Limme" to the project "Poetry".
+Final Answer: I have added "Jack Limme" to the project "Poetry". The operation id is "667fa51e563ae543e8aab01c".
+
+
+
+Example 4:
+User query: Add a task called "Shopping" to the project "Surprised Birthday" and assign it to Alice Baur.
+Plan step 1: Find the project named "Surprised Birthday" and return its id.
+API calling 1: GET /workspaces/667eeaee004df9127d441c4c/projects with parameters {name: "Surprised Birthday", token="{token}"}.
+API response 1: ID of the project "Surprised Birthday" is "72hhs6529dh68b7918d140f".
+Plan step 2: Find the id of the user "Alice Baur".
+API calling 2: GET /workspaces/667eeaee004df9127d441c4c/users with parameters {name: "Alice Baur", token="{token}"}.
+API response 2: The user "Alice Baur" has an id "{user_id}".
+Plan step 3: Add the task named "Shopping" to the project of id "72hhs6529dh68b7918d140f". The task is assigned to the user id "{user_id}".
+API calling 3: POST /workspaces/667eeaee004df9127d441c4c/projets/72hhs6529dh68b7918d140f/tasks with parameters name="Shopping", assigneeIds=["{user_id}"], token="{token}".
+API response 3: New task "Shopping" created with id "98773jd6u28992e07a7js72jd0k" and assigned to user of id "{user_id}".
+Thought: I have finished the execution plan and added a task "Shopping" to the project "Surprised Birthday".
+Final Answer: I have added a task "Shopping" to the project "Surprised Birthday" and assigned "Alice Baur" to the task.
+

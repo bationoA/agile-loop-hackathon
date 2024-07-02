@@ -1,0 +1,256 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Options title",
+    "description": "Description from options",
+    "version": "6.0.7-beta",
+    "termsOfService": "http://tos.myweb.com"
+  },
+  "servers": [
+    {
+      "url": "https://app.asana.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "noauthAuth": {
+        "type": "http",
+        "scheme": "noauth"
+      }
+    }
+  },
+  "paths": {
+    "/api/1.0/teams": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "create a team",
+        "description": "Create a new team",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "data": {
+                    "name": "Team unfold",
+                    "description": "This is team unfold",
+                    "organization": "1207682594489056"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "noauthAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/1.0/workspaces": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "get workspaces",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 2/1207659450782126/1207670408761348:d537d0afe49dde301c70717d1d17bd9b"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/1.0/projects": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "create a project",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "data": {
+                    "name": "Project of Hackthon",
+                    "team": "1207691525697942",
+                    "workspace": "1207682594489056"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/1.0/projects/{project_id}/sections": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Create a section in a project",
+        "description": "Add a section to a project using the id of the project",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": "{\r\n  \"data\": {\r\n    \"name\": \"Unfold To Do\",\r\n  }\r\n}"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/1.0/tasks": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "add task to a project and assign it to a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "data": {
+                    "name": "BUILD THE FRONTEND",
+                    "assignee": "1207682904149620",
+                    "projects": [
+                      "1207691530686483"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/1.0/workspaces/1207682594489056/teams": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Get the id of a team",
+        "description": "Get the id of a team",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer 2/1207682904149620/1207691303348870:5969b620b82d12c3ce0c82f97405954f"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
